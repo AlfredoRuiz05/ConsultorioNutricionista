@@ -88,6 +88,13 @@ public class Dieta {
     public void setPesoFinal(double pesoFinal) {
         this.pesoFinal = pesoFinal;
     }
+
+    @Override
+    public String toString() {
+        return "Dieta{" + " idDieta= " + idDieta + ", nombre= " + nombre + ", paciente= " + paciente + ", fechaInicial= " + fechaInicial + ", fechaFinal= " + fechaFinal + ", pesoInicial= " + pesoInicial + ", pesoFinal= " + pesoFinal + '}';
+    }
    
+    
+    
    
 }
