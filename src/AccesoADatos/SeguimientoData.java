@@ -15,6 +15,9 @@ import AccesoADatos.PacienteData;
 import Entidades.Seguimiento;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SeguimientoData {
     
@@ -168,31 +171,61 @@ private Connection con = null;
      
      public double DevolverPesoSegunFecha(int id){
          
-      
-      List<LocalDate> fechas = new ArrayList<>();
-         
+    try {
+        LocalDate mayorFecha = null;
+        
         for(Seguimiento ListaSeguimientos:  obtenerSeguimientoPorPersona(id) ){
             
             
-         
+            LocalDate fecha = ListaSeguimientos.getFecha();
             
-       LocalDate fechaUno = ListaSeguimientos.getFecha();
+            if (mayorFecha == null || fecha.compareTo(mayorFecha) > 0) {
+                mayorFecha = fecha;
+            }
+            
+        }
         
-        LocalDate fechaDos=  ListaSeguimientos.getFecha();
+        
+        String sql = "SELECT peso WHERE fecha=?";
+        
+        PreparedStatement ps = con.prepareStatement(sql);
+        
+        ps.setDate(1, Date.valueOf(mayorFecha));
+        
+        ResultSet resultado = ps.executeQuery();
+
+            if (resultado.next()) {
+                
+                Seguimiento seguimiento = new Seguimiento();
+                
+               
+                
+                seguimiento.setPeso(resultado.getDouble("peso"));
+                
+                double peso = resultado.getDouble("peso");
+            }
         
         
-        fechaUno.compareTo(fechaDos);
+        
+        
+        
+        
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(SeguimientoData.class.getName()).log(Level.SEVERE, null, ex);
+    }
         
         
         
         
         }
+    
         
      }
 
      
      
-}
+
     
     
     
