@@ -8,12 +8,15 @@ import Entidades.Paciente;
 import Entidades.Dieta;
 import AccesoADatos.DietaData;
 import java.time.LocalDate;
+import java.time.Month;
+import Entidades.Seguimiento;
+import AccesoADatos.SeguimientoData;
 
 public class ConsultorioNutricionista {
 
     public static void main(String[] args) {
-       // PacienteData pacienteData = new PacienteData();
-       // Paciente paciente = new Paciente("Martina", 1, "San Juan", "1",1);
+        PacienteData pacienteData = new PacienteData();
+        Paciente paciente = new Paciente("Carlos", 12, "Cosquin", "13",2);
         //pacienteData.guardarPaciente(paciente);
         // pacienteData.modificarPaciente(paciente);
         //pacienteData.eliminarPaciente(3);
@@ -24,6 +27,7 @@ public class ConsultorioNutricionista {
         //}
         //System.out.println(pacienteData.obtenerPacientePorId(2));
 
+        
        // ComidaData comidaData = new ComidaData();
        // Comida comida = new Comida(" Frutos secos ", "Vitamina D","Cena", 600,4);
         //comidaData.guardarComida(comida);
@@ -45,6 +49,20 @@ public class ConsultorioNutricionista {
        // }
        //System.out.println(dietaData.obtenerDietaPorPersona(4));
        //dietaData.borrarDietaPorPaciente(4);
+       
+       
+        //Seguimiento seguimiento = new Seguimiento( paciente, LocalDate.of(2019, 5, 14), 53.1,52.2,42.0);
+        
+        //SeguimientoData seguimientoData= new SeguimientoData();
+        
+        //seguimientoData.AgregarSeguimiento(seguimiento);
+        
+        //System.out.println(seguimientoData.ObtenerSeguimientoPorID(8));
+        
+       // seguimientoData.eliminarSeguimiento(8);
+       
+        //System.out.println( seguimientoData.obtenerSeguimientoPorPersona(1));
+        
     }
-
+  
 }

@@ -16,25 +16,28 @@ public class Seguimiento {
     private Paciente paciente;
     private LocalDate fecha;
     private double medidaPecho, medidaCintura, medidaCadera;
-
+    private double peso;
+    
     public Seguimiento() {
     }
 
-    public Seguimiento(Paciente paciente, LocalDate fecha, double medidaPecho, double medidaCintura, double medidaCadera) {
+    public Seguimiento(Paciente paciente, LocalDate fecha, double medidaPecho, double medidaCintura, double medidaCadera, double peso) {
         this.paciente = paciente;
         this.fecha = fecha;
         this.medidaPecho = medidaPecho;
         this.medidaCintura = medidaCintura;
         this.medidaCadera = medidaCadera;
+        this.peso=peso;
     }
 
-    public Seguimiento(int idSeguimiento, Paciente paciente, LocalDate fecha, double medidaPecho, double medidaCintura, double medidaCadera) {
+    public Seguimiento(int idSeguimiento, Paciente paciente, LocalDate fecha, double medidaPecho, double medidaCintura, double medidaCadera, double peso) {
         this.idSeguimiento = idSeguimiento;
         this.paciente = paciente;
         this.fecha = fecha;
         this.medidaPecho = medidaPecho;
         this.medidaCintura = medidaCintura;
         this.medidaCadera = medidaCadera;
+        this.peso=peso;
     }
 
     public int getIdSeguimiento() {
@@ -84,6 +87,27 @@ public class Seguimiento {
     public void setMedidaCadera(double medidaCadera) {
         this.medidaCadera = medidaCadera;
     }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+
+    
+    
+    
+    
+    
+    @Override
+    public String toString() {
+        return "Seguimiento{" + "idSeguimiento=" + idSeguimiento + ", paciente=" + paciente + ", fecha=" + fecha + ", medidaPecho=" + medidaPecho + ", medidaCintura=" + medidaCintura + ", medidaCadera=" + medidaCadera + ", peso= " + peso + '}';
+    }
+    
+    
+    
     
     
     
