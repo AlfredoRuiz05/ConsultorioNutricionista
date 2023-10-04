@@ -1,7 +1,7 @@
 
 package Entidades;
 
-import Entidades.Paciente;
+
 import java.time.LocalDate;
 
 public class Dieta {
