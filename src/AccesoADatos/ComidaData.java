@@ -22,14 +22,15 @@ public class ComidaData {
 
     public void guardarComida(Comida comida) {
 
-        String sql = "INSERT INTO comida (nombre, detalle, cantidadCalorias) VALUES (?,?,?) ";
+        String sql = "INSERT INTO comida (nombre, detalle,tipoComida, cantidadCalorias) VALUES (?,?,?,?) ";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, comida.getNombre());
             ps.setString(2, comida.getDetalle());
-            ps.setInt(3, comida.getCantidadCalorias());
+            ps.setString(3, comida.getTipoComida());
+            ps.setInt(4, comida.getCantidadCalorias());
 
             int listaModificada = ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -53,7 +54,7 @@ public class ComidaData {
         Comida comida = null;
 
         try {
-            String sql = "SELECT nombre,detalle,cantidadCalorias FROM comida WHERE idComida = ?";
+            String sql = "SELECT nombre,detalle, tipoComida ,cantidadCalorias FROM comida WHERE idComida = ?";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -68,6 +69,7 @@ public class ComidaData {
                 comida.setIdComida(id);
                 comida.setNombre(resultado.getString("nombre"));
                 comida.setDetalle(resultado.getString("detalle"));
+                comida.setTipoComida(resultado.getString("tipoComida"));
                 comida.setCantidadCalorias(resultado.getInt("cantidadCalorias"));
             } else {
                 JOptionPane.showMessageDialog(null, "No existe esa Comida");
@@ -83,13 +85,17 @@ public class ComidaData {
     }
 
     public void modificarComida(Comida comida) {
-         try {
-        String sql = "UPDATE comida SET nombre=?, detalle=?, cantidadCalorias=? WHERE idComida=?";
+        
+        try {
+        String sql = "UPDATE comida SET nombre=?, detalle=?, tipoComida=?, cantidadCalorias=? WHERE idComida=?";
+        
         PreparedStatement ps = con.prepareStatement(sql);
+        
         ps.setString(1, comida.getNombre());
         ps.setString(2, comida.getDetalle());
-        ps.setInt(3, comida.getCantidadCalorias());
-        ps.setInt(4, comida.getIdComida()); 
+        ps.setString(3, comida.getTipoComida());
+        ps.setInt(4, comida.getCantidadCalorias());
+        ps.setInt(5, comida.getIdComida()); 
         
         int exito = ps.executeUpdate();
         
@@ -107,7 +113,7 @@ public class ComidaData {
     public List<Comida> listarComidas() {
         Comida comida = null;
 
-        String sql = "SELECT nombre,detalle,cantidadCalorias,idComida FROM comida";
+        String sql = "SELECT nombre,detalle,tipoComida,cantidadCalorias,idComida FROM comida";
 
         ArrayList<Comida> comidas = new ArrayList<>();
 
@@ -121,6 +127,7 @@ public class ComidaData {
                 comida = new Comida();
                 comida.setNombre(resultado.getString("nombre"));
                 comida.setDetalle(resultado.getString("detalle"));
+                comida.setTipoComida(resultado.getString("tipoComida"));
                 comida.setCantidadCalorias(resultado.getInt("cantidadCalorias"));
                 comida.setIdComida(resultado.getInt("idComida"));
                 comidas.add(comida);

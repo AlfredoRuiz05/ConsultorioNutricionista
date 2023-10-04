@@ -21,13 +21,12 @@ public class PacienteData {
 
     public void guardarPaciente(Paciente paciente) {
         try {
-            String sql = "INSERT INTO paciente (nombre, dni, domicilio, telefono, estado) VALUES(?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO paciente (nombre, dni, domicilio, telefono) VALUES(?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, paciente.getNombre());
             ps.setInt(2, paciente.getDni());
             ps.setString(3, paciente.getDomicilio());
             ps.setString(4, paciente.getTelefono());
-            ps.setBoolean(5, paciente.isEstado());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
@@ -67,7 +66,7 @@ public class PacienteData {
 
     public void eliminarPaciente(int id) {
         try {
-            String sql = "UPDATE paciente SET estado = 0  WHERE idPaciente=?";
+            String sql = "DELETE FROM paciente WHERE idPaciente=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             int exito = ps.executeUpdate();
@@ -81,12 +80,12 @@ public class PacienteData {
         }
     }
 
-    public Paciente buscarPaciente(int id) {
+    public Paciente buscarPacientePorID(int id) {
 
         Paciente paciente = null;
 
         try {
-            String sql = "SELECT nombre, dni, domicilio, telefono FROM paciente WHERE idPaciente = ? AND estado = 1";
+            String sql = "SELECT nombre, dni, domicilio, telefono FROM paciente WHERE idPaciente = ? ";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -102,8 +101,7 @@ public class PacienteData {
                 paciente.setDni(resultado.getInt("dni"));
                 paciente.setDomicilio(resultado.getString("domicilio"));
                 paciente.setTelefono(resultado.getString("telefono"));
-
-                paciente.setEstado(true);
+                
             } else {
                 JOptionPane.showMessageDialog(null, "No existe ese paciente");
             }
@@ -118,12 +116,12 @@ public class PacienteData {
 
     }
 
-    public Paciente buscarPorDni(int dni) {
+    public Paciente buscarPacientePorDni(int dni) {
 
         Paciente paciente = null;
 
         try {
-            String sql = "SELECT nombre, dni, domicilio, telefono, idPaciente FROM paciente WHERE dni = ? AND estado = 1";
+            String sql = "SELECT nombre, dni, domicilio, telefono, idPaciente FROM paciente WHERE dni = ? ";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -141,7 +139,7 @@ public class PacienteData {
                 paciente.setDomicilio(resultado.getString("domicilio"));
                 paciente.setTelefono(resultado.getString("telefono"));
 
-                paciente.setEstado(true);
+              
             }
 
             ps.close();
@@ -158,7 +156,7 @@ public class PacienteData {
 
         Paciente paciente = null;
 
-        String sql = "SELECT nombre, dni, domicilio, telefono, idPaciente FROM paciente WHERE  estado = 1";
+        String sql = "SELECT nombre, dni, domicilio, telefono, idPaciente FROM paciente ";
 
         ArrayList<Paciente> pacientes = new ArrayList<>();
 

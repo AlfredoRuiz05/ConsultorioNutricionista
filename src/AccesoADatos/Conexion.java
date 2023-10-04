@@ -11,7 +11,7 @@ public class Conexion {
     
     
     private static final String url ="jdbc:mariadb://localhost:3306/";
-    private static final String bd="nutricionista";
+    private static final String bd="nutriprueba";
     private static final String usuario="root";
     private static final String password="";
     

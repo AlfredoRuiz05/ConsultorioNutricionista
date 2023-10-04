@@ -4,26 +4,26 @@ package Entidades;
 public class Paciente {
     private String nombre, domicilio, telefono;
     private int dni, idPaciente;
-    private boolean estado;
+
 
     public Paciente() {
     }
 
-    public Paciente(String nombre, int dni, String domicilio, String telefono, boolean estado) {
+    public Paciente(String nombre, int dni, String domicilio, String telefono) {
         this.nombre = nombre;
         this.domicilio = domicilio;
         this.telefono = telefono;
         this.dni = dni;
-        this.estado = estado;
+     
     }
 
-    public Paciente(String nombre, int dni, String domicilio, String telefono, int idPaciente, boolean estado) {
+    public Paciente(String nombre, int dni, String domicilio, String telefono, int idPaciente) {
         this.nombre = nombre;
         this.domicilio = domicilio;
         this.telefono = telefono;
         this.dni = dni;
         this.idPaciente = idPaciente;
-        this.estado = estado;
+    
     }
 
     public String getNombre() {
@@ -64,14 +64,6 @@ public class Paciente {
 
     public void setIdPaciente(int idPaciente) {
         this.idPaciente = idPaciente;
-    }
-
-    public boolean isEstado() {
-        return estado;
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
     }
 
     @Override

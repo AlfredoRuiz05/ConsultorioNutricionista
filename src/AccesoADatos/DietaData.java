@@ -23,7 +23,7 @@ public class DietaData {
     }
 
     public void guardarDieta(Dieta dieta) {
-        String sql = "INSERT INTO Dieta (nombre, idPaciente,fechaInicial,pesoInicial,pesoFinal,fechaFinal) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO Dieta (nombre, idPaciente,fechaInicial,pesoInicial,pesoFinal,fechaFinal,altura) VALUES (?,?,?,?,?,?,?)";
         Paciente paciente = new Paciente();
 
         try {
@@ -32,11 +32,11 @@ public class DietaData {
 
             ps.setString(1, dieta.getNombre() );
             ps.setInt(2, dieta.getPaciente().getIdPaciente());
-            ps.setDate(3, Date.valueOf( dieta.getFechaFinal()));
+            ps.setDate(3, Date.valueOf( dieta.getFechaInicial()));
             ps.setDouble(4, dieta.getPesoInicial());
             ps.setDouble(5, dieta.getPesoFinal());
             ps.setDate(6, Date.valueOf(dieta.getFechaFinal()));
-            
+            ps.setDouble(7, dieta.getAltura());
             int listaModificada = ps.executeUpdate();
 
             if (listaModificada == 1) {
@@ -53,7 +53,7 @@ public class DietaData {
 
     public List<Dieta> obtenerDietas() {
         
-        String sql = "SELECT idDieta, nombre, idPaciente, fechaInicial,pesoInicial,pesoFinal,fechaFinal FROM dieta";
+        String sql = "SELECT idDieta, nombre, idPaciente, fechaInicial,pesoInicial,pesoFinal,fechaFinal,altura FROM dieta";
         
         ArrayList<Dieta> dietas = new ArrayList<>();
 
@@ -70,6 +70,7 @@ public class DietaData {
                 dieta.setFechaInicial(resultado.getDate("fechaInicial").toLocalDate());
                 dieta.setPesoInicial(resultado.getDouble("pesoInicial"));
                 dieta.setPesoFinal(resultado.getDouble("pesoFinal"));
+                dieta.setAltura(resultado.getDouble("altura"));
 
                 int paciente = resultado.getInt("idPaciente");
                 PacienteData pacienteData = new PacienteData();
@@ -97,7 +98,7 @@ public class DietaData {
         List<Dieta> pacientes = new ArrayList<>();
 
         try {
-            String sql = "SELECT idDieta, nombre, idPaciente , fechaInicial, pesoInicial,pesoFinal,fechaFinal FROM dieta WHERE idPaciente=?";
+            String sql = "SELECT idDieta, nombre, idPaciente , fechaInicial, pesoInicial,pesoFinal,fechaFinal,altura FROM dieta WHERE idPaciente=?";
 
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -119,7 +120,7 @@ public class DietaData {
                 dieta.setPesoInicial(resultado.getDouble("pesoInicial"));
                 dieta.setPesoFinal(resultado.getDouble("pesoFinal"));
                  dieta.setFechaFinal(resultado.getDate("fechaFinal").toLocalDate());
-                
+                dieta.setAltura(resultado.getDouble("altura"));
                 
                 
                
@@ -135,34 +136,33 @@ public class DietaData {
         return pacientes ;
     }
 
-  /*
-    _________________________________________
+  
+
     
-    VER MAS TARDE SI ACTUALIZAMOS LA DIETA
-    _________________________________________
-    
-    public boolean actualizarDieta (double nota, int idAlumno, int idMateria) {
+    public boolean modificarDieta (int idPaciente,Dieta dieta) {
+        
         boolean actual=false;
+        
         try {
-            String sql = "UPDATE inscripcion SET nota=? WHERE idAlumno=? and idMateria=?";
+            String sql = "UPDATE dieta SET fechaInicial=?,pesoInicial,pesoFinal,fechaFinal WHERE idPaciente=?";
+            
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setDouble(1, nota);
-            ps.setInt(2, idAlumno);
-            ps.setInt(3, idMateria);
+            ps.setDate(1,Date.valueOf(dieta.getFechaInicial()));
+            ps.setDouble(2, dieta.getPesoInicial() );
+            ps.setDouble(3, dieta.getPesoFinal());
+             ps.setDate(4,Date.valueOf(dieta.getFechaFinal()));
+            
             int exito = ps.executeUpdate();
 
+           
+            
             if(exito==1){
                 actual=true;
             }
             else{
                 actual=false;
             }
-//            if (exito >= 1) {
-//                JOptionPane.showMessageDialog(null, "La nota se actualizo correctamente");
-//            } else {
-//
-//                JOptionPane.showMessageDialog(null, "La nota no se pudo actualizar");
-//            }
+
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al conectarse con la tabla inscripcion " + ex.getMessage());
@@ -170,7 +170,12 @@ public class DietaData {
 return actual;
     }
 
-*/
+
+    
+    
+    
+    
+    
     public void borrarDietaPorPaciente( int idPaciente) {
         try {
             String sql = "DELETE FROM dieta WHERE idPaciente = ?";
@@ -188,6 +193,44 @@ return actual;
             JOptionPane.showMessageDialog(null, "Error al conectarse con la tabla Dieta " + ex.getMessage());
         }
     }
+    
+    
+//    
+//     public List<Paciente> ObjetivosNoCumplidos ( int idDieta ) {
+//
+//        ArrayList<Paciente> pacientes = new ArrayList<>();
+//        String sql = "SELECT * FROM paciente "
+//                + "WHERE estado = 1 AND idMateria NOT IN "
+//                + "(SELECT idMateria FROM inscripcion WHERE idAlumno = ?)";
+//
+////        String sql="SELECT *FROM materia"
+////                + "WHERE estado=1 AND idMateria not in"
+////                + "(SELECT idMateria FROM inscripcion WHERE idAlumno=?)";
+//        try {
+//            PreparedStatement ps = con.prepareStatement(sql);
+//            ps.setInt(1, idAlumno);
+//            ResultSet resultado = ps.executeQuery();
+//            while (resultado.next()) {
+//                Materia materia = new Materia();
+//                materia.setIdMateria(resultado.getInt("idMateria"));
+//                materia.setNombre(resultado.getString("nombre"));
+//                materia.setAnioMateria(resultado.getInt("año"));
+//                materias.add(materia);
+//
+//            }
+//            ps.close();
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "No se pudieron obtener los datos de la tabla " + ex);
+//        }
+//        return materias;
+//    }
+
+    
+    
+    
+    
+    
+    
 }
 
 

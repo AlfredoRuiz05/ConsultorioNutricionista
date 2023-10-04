@@ -2,21 +2,24 @@
 package Entidades;
 
 public class Comida {
-   private String nombre, detalle;
+   private String nombre, detalle,tipoComida;
    private int cantidadCalorias, idComida;
 
     public Comida() {
     }
 
-    public Comida(String nombre, String detalle, int cantidadCalorias) {
+    public Comida(String nombre, String detalle , String tipoComida , int cantidadCalorias) {
         this.nombre = nombre;
         this.detalle = detalle;
+         this.tipoComida= tipoComida;
         this.cantidadCalorias = cantidadCalorias;
+       
     }
 
-    public Comida(String nombre, String detalle, int cantidadCalorias, int idComida) {
+    public Comida(String nombre, String detalle, String tipoComida  , int cantidadCalorias, int idComida) {
         this.nombre = nombre;
         this.detalle = detalle;
+         this.tipoComida= tipoComida;
         this.cantidadCalorias = cantidadCalorias;
         this.idComida = idComida;
     }
@@ -53,9 +56,22 @@ public class Comida {
         this.idComida = idComida;
     }
 
+    public String getTipoComida() {
+        return tipoComida;
+    }
+
+    public void setTipoComida(String tipoComida) {
+        this.tipoComida = tipoComida;
+    }
+
     @Override
     public String toString() {
-        return "Comida{" + "nombre= " + nombre + ", detalle= " + detalle + ", cantidadCalorias= " + cantidadCalorias + '}';
+        return "Comida{" + "nombre= " + nombre + ", detalle= " + detalle + ", tipoComida= " + tipoComida + ", cantidadCalorias= " + cantidadCalorias + ", idComida= " + idComida + '}';
     }
-   
+
 }
+    
+    
+    
+    
+    
