@@ -170,10 +170,11 @@ private Connection con = null;
      
      
      public double DevolverPesoSegunFecha(int id){
-         
+         double peso=0;
     try {
         LocalDate mayorFecha = null;
-        
+         
+         
         for(Seguimiento ListaSeguimientos:  obtenerSeguimientoPorPersona(id) ){
             
             
@@ -186,7 +187,7 @@ private Connection con = null;
         }
         
         
-        String sql = "SELECT peso WHERE fecha=?";
+        String sql = "SELECT peso FROM seguimiento WHERE fecha=?";
         
         PreparedStatement ps = con.prepareStatement(sql);
         
@@ -202,7 +203,7 @@ private Connection con = null;
                 
                 seguimiento.setPeso(resultado.getDouble("peso"));
                 
-                double peso = resultado.getDouble("peso");
+                peso = resultado.getDouble("peso");
             }
         
         
@@ -216,11 +217,11 @@ private Connection con = null;
     }
         
         
-        
-        
+         return peso;  
+       
         }
     
-        
+      
      }
 
      

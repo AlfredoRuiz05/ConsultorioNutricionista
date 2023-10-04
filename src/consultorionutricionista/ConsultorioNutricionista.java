@@ -51,18 +51,19 @@ public class ConsultorioNutricionista {
        //dietaData.borrarDietaPorPaciente(4);
        
        
-        //Seguimiento seguimiento = new Seguimiento( paciente, LocalDate.of(2019, 5, 14), 53.1,52.2,42.0);
+        Seguimiento seguimiento = new Seguimiento( paciente, LocalDate.of(2020, 5, 14), 53.1,52.2,42.0,61);
         
-        //SeguimientoData seguimientoData= new SeguimientoData();
+        SeguimientoData seguimientoData= new SeguimientoData();
         
-        //seguimientoData.AgregarSeguimiento(seguimiento);
+       // seguimientoData.AgregarSeguimiento(seguimiento);
         
         //System.out.println(seguimientoData.ObtenerSeguimientoPorID(8));
         
        // seguimientoData.eliminarSeguimiento(8);
        
         //System.out.println( seguimientoData.obtenerSeguimientoPorPersona(1));
-        
+     
+        System.out.println(seguimientoData.DevolverPesoSegunFecha(2));
     }
   
 }
