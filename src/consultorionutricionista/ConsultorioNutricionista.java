@@ -43,7 +43,7 @@ public class ConsultorioNutricionista {
         // }
         //System.out.println(dietaData.obtenerDietaPorPersona(4));
         //dietaData.borrarDietaPorPaciente(4);
-        Seguimiento seguimiento = new Seguimiento(paciente, LocalDate.of(2023, 3, 14), 43.1, 42.2, 32.0, 51);
+        Seguimiento seguimiento = new Seguimiento(paciente, LocalDate.of(2022, 10, 14), 43.1, 42.2, 32.0, 51);
 
         SeguimientoData seguimientoData = new SeguimientoData();
 

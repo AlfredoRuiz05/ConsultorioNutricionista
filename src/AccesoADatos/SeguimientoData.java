@@ -29,38 +29,78 @@ public class SeguimientoData {
 
     public void AgregarSeguimiento(Seguimiento seguimiento) {
         try {
-            String sqlFecha = "SELECT idPaciente, fecha FROM seguimiento WHERE idPaciente=?";
-            PreparedStatement psFecha = con.prepareStatement(sqlFecha);
-            psFecha.setInt(1, seguimiento.getPaciente().getIdPaciente());
-            ResultSet rs = psFecha.executeQuery();
-            LocalDate fecha;
-            if(rs.next()){
-                fecha = rs.getDate("fecha").toLocalDate();
-                            if (fecha.compareTo(seguimiento.getFecha()) != 0) {
-                String sql = "INSERT INTO Seguimiento (idPaciente ,fecha, medidaPecho ,medidaCintura ,medidaCadera, peso) VALUES (?,?,?,?,?,?)";               
-                try (PreparedStatement ps = con.prepareStatement(sql)) {
-                    ps.setInt(1, seguimiento.getPaciente().getIdPaciente());
-                    ps.setDate(2, Date.valueOf(seguimiento.getFecha()));
-                    ps.setDouble(3, seguimiento.getMedidaPecho());
-                    ps.setDouble(4, seguimiento.getMedidaCintura());
-                    ps.setDouble(5, seguimiento.getMedidaCadera());
-                    ps.setDouble(6, seguimiento.getPeso());
-                    int listaModificada = ps.executeUpdate();
-                    if (listaModificada == 1) {                       
-                        JOptionPane.showMessageDialog(null, " El seguimiento ha sido añadida con exito");
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pueden repetir fechas");
-            }
-            }
-            
+            // Verificar si ya existe un registro para la fecha y el paciente
+            /*Primero, se crea una consulta SQL que cuenta cuántos registros existen en la tabla Seguimiento 
+            con el mismo idPaciente y fecha que el nuevo seguimiento que se va a agregar.*/
+            String sqlVerificarFecha = "SELECT COUNT(*) FROM Seguimiento WHERE idPaciente=? AND fecha=?";
+            try (PreparedStatement psVerificarFecha = con.prepareStatement(sqlVerificarFecha)) {
+                //se establecen como parametros del PS a idPaciente y fecha
+                psVerificarFecha.setInt(1, seguimiento.getPaciente().getIdPaciente());
+                psVerificarFecha.setDate(2, Date.valueOf(seguimiento.getFecha()));
 
+                ResultSet rs = psVerificarFecha.executeQuery();
+                rs.next();
+                int registrosExisten = rs.getInt(1);
+
+                if (registrosExisten == 0) {
+                    // No existe un registro para esta fecha, se puede agregar
+                    String sqlInsertar = "INSERT INTO Seguimiento (idPaciente, fecha, medidaPecho, medidaCintura, medidaCadera, peso) VALUES (?,?,?,?,?,?)";
+                    try (PreparedStatement psInsertar = con.prepareStatement(sqlInsertar)) {
+                        psInsertar.setInt(1, seguimiento.getPaciente().getIdPaciente());
+                        psInsertar.setDate(2, Date.valueOf(seguimiento.getFecha()));
+                        psInsertar.setDouble(3, seguimiento.getMedidaPecho());
+                        psInsertar.setDouble(4, seguimiento.getMedidaCintura());
+                        psInsertar.setDouble(5, seguimiento.getMedidaCadera());
+                        psInsertar.setDouble(6, seguimiento.getPeso());
+
+                        int filasModificadas = psInsertar.executeUpdate();
+                        if (filasModificadas == 1) {
+                            JOptionPane.showMessageDialog(null, "El seguimiento ha sido añadido con éxito");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error al agregar el seguimiento");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pueden repetir fechas");
+                }
+            }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo establecer la conexion "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al establecer la conexión: " + ex.getMessage());
         }
     }
 
+//    public void AgregarSeguimiento(Seguimiento seguimiento) {
+//        try {
+//            String sqlFecha = "SELECT idPaciente, fecha FROM seguimiento WHERE idPaciente=?";
+//            PreparedStatement psFecha = con.prepareStatement(sqlFecha);
+//            psFecha.setInt(1, seguimiento.getPaciente().getIdPaciente());
+//            ResultSet rs = psFecha.executeQuery();
+//            LocalDate fecha;
+//            if (rs.next()) {
+//                fecha = rs.getDate("fecha").toLocalDate();
+//                if (fecha.compareTo(seguimiento.getFecha()) != 0) {
+//                    String sql = "INSERT INTO Seguimiento (idPaciente ,fecha, medidaPecho ,medidaCintura ,medidaCadera, peso) VALUES (?,?,?,?,?,?)";
+//                    try (PreparedStatement ps = con.prepareStatement(sql)) {
+//                        ps.setInt(1, seguimiento.getPaciente().getIdPaciente());
+//                        ps.setDate(2, Date.valueOf(seguimiento.getFecha()));
+//                        ps.setDouble(3, seguimiento.getMedidaPecho());
+//                        ps.setDouble(4, seguimiento.getMedidaCintura());
+//                        ps.setDouble(5, seguimiento.getMedidaCadera());
+//                        ps.setDouble(6, seguimiento.getPeso());
+//                        int listaModificada = ps.executeUpdate();
+//                        if (listaModificada == 1) {
+//                            JOptionPane.showMessageDialog(null, " El seguimiento ha sido añadida con exito");
+//                        }
+//                    }
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "No se pueden repetir fechas");
+//                }
+//            }
+//
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "No se pudo establecer la conexion " + ex.getMessage());
+//        }
+//    }
     public Seguimiento ObtenerSeguimientoPorID(int id) {
 
         Seguimiento seguimiento = null;
