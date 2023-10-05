@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import Entidades.Paciente;
 import java.sql.Date;
 import AccesoADatos.PacienteData;
+import Entidades.Dieta;
 
 import Entidades.Seguimiento;
 import java.sql.Statement;
@@ -69,38 +70,6 @@ public class SeguimientoData {
         }
     }
 
-//    public void AgregarSeguimiento(Seguimiento seguimiento) {
-//        try {
-//            String sqlFecha = "SELECT idPaciente, fecha FROM seguimiento WHERE idPaciente=?";
-//            PreparedStatement psFecha = con.prepareStatement(sqlFecha);
-//            psFecha.setInt(1, seguimiento.getPaciente().getIdPaciente());
-//            ResultSet rs = psFecha.executeQuery();
-//            LocalDate fecha;
-//            if (rs.next()) {
-//                fecha = rs.getDate("fecha").toLocalDate();
-//                if (fecha.compareTo(seguimiento.getFecha()) != 0) {
-//                    String sql = "INSERT INTO Seguimiento (idPaciente ,fecha, medidaPecho ,medidaCintura ,medidaCadera, peso) VALUES (?,?,?,?,?,?)";
-//                    try (PreparedStatement ps = con.prepareStatement(sql)) {
-//                        ps.setInt(1, seguimiento.getPaciente().getIdPaciente());
-//                        ps.setDate(2, Date.valueOf(seguimiento.getFecha()));
-//                        ps.setDouble(3, seguimiento.getMedidaPecho());
-//                        ps.setDouble(4, seguimiento.getMedidaCintura());
-//                        ps.setDouble(5, seguimiento.getMedidaCadera());
-//                        ps.setDouble(6, seguimiento.getPeso());
-//                        int listaModificada = ps.executeUpdate();
-//                        if (listaModificada == 1) {
-//                            JOptionPane.showMessageDialog(null, " El seguimiento ha sido añadida con exito");
-//                        }
-//                    }
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "No se pueden repetir fechas");
-//                }
-//            }
-//
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "No se pudo establecer la conexion " + ex.getMessage());
-//        }
-//    }
     public Seguimiento ObtenerSeguimientoPorID(int id) {
 
         Seguimiento seguimiento = null;
@@ -228,23 +197,11 @@ public class SeguimientoData {
         return peso;
     }
 
-    public double obtenerPesoPorFecha2(int id, LocalDate fecha) {
-        double peso = 0;
-
-        try {
-            String sql = "SELECT peso FROM seguimiento WHERE fecha=? AND idPaciente=?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setDate(1, Date.valueOf(fecha));
-            ps.setInt(2, id);
-            ResultSet resultado = ps.executeQuery();
-
-            if (resultado.next()) {
-                peso = resultado.getDouble("peso");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SeguimientoData.class.getName()).log(Level.SEVERE, null, ex);
+    public void objetivoCumplido(Dieta dieta){
+        if((dieta.getFechaFinal().equals(encontrarFechaMasReciente(dieta.getPaciente().getIdPaciente())))&& (dieta.getPesoFinal()== obtenerPesoPorFecha(dieta.getPaciente().getIdPaciente()))){
+            JOptionPane.showMessageDialog(null, "El objetivo fue alcanzado");
+        }else{
+            JOptionPane.showMessageDialog(null, "No alcanzo el objetivo");
         }
-
-        return peso;
     }
 }
