@@ -29,10 +29,34 @@ public class SeguimientoData {
     }
 
     public void AgregarSeguimiento(Seguimiento seguimiento) {
+       
+        
+        
+        
+        
+        
+        
         try {
             // Verificar si ya existe un registro para la fecha y el paciente
             /*Primero, se crea una consulta SQL que cuenta cuántos registros existen en la tabla Seguimiento 
             con el mismo idPaciente y fecha que el nuevo seguimiento que se va a agregar.*/
+            
+            
+           
+            String fechaDieta= "SELECT fechafinal FROM dieta JOIN seguimiento ON (seguimiento.idPaciente=dieta.idPaciente ) WHERE idPaciente =? ";
+            
+           try( PreparedStatement psFechaFinal= con.prepareStatement(fechaDieta)){
+               
+            psFechaFinal.setInt(1, seguimiento.getPaciente().getIdPaciente());
+            
+            ResultSet rsDieta= psFechaFinal.executeQuery();
+            rsDieta.next();
+            LocalDate fechaFinal= rsDieta.getDate("fechafinal").toLocalDate();
+            
+           
+            
+            
+            
             String sqlVerificarFecha = "SELECT COUNT(*) FROM Seguimiento WHERE idPaciente=? AND fecha=?";
             try (PreparedStatement psVerificarFecha = con.prepareStatement(sqlVerificarFecha)) {
                 //se establecen como parametros del PS a idPaciente y fecha
@@ -43,10 +67,11 @@ public class SeguimientoData {
                 rs.next();
                 int registrosExisten = rs.getInt(1);
                 //verificar que la fecha de seguimiento no sea mayor que la fecha final 
-                if (registrosExisten == 0  ) {
+                if (registrosExisten == 0 && seguimiento.getFecha().isBefore(fechaFinal)  ) {
                     // No existe un registro para esta fecha, se puede agregar
                     String sqlInsertar = "INSERT INTO Seguimiento (idPaciente, fecha, medidaPecho, medidaCintura, medidaCadera, peso) VALUES (?,?,?,?,?,?)";
                     try (PreparedStatement psInsertar = con.prepareStatement(sqlInsertar)) {
+                        
                         psInsertar.setInt(1, seguimiento.getPaciente().getIdPaciente());
                         psInsertar.setDate(2, Date.valueOf(seguimiento.getFecha()));
                         psInsertar.setDouble(3, seguimiento.getMedidaPecho());
@@ -65,6 +90,7 @@ public class SeguimientoData {
                     JOptionPane.showMessageDialog(null, "No se pueden repetir fechas");
                 }
             }
+           }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al establecer la conexión: " + ex.getMessage());
         }
@@ -199,6 +225,7 @@ public class SeguimientoData {
 
     public void objetivoCumplido(Dieta dieta){
         if((dieta.getFechaFinal().equals(encontrarFechaMasReciente(dieta.getPaciente().getIdPaciente())))&& (dieta.getPesoFinal()== obtenerPesoPorFecha(dieta.getPaciente().getIdPaciente()))){
+            
             JOptionPane.showMessageDialog(null, "El objetivo fue alcanzado");
         }else{
             JOptionPane.showMessageDialog(null, "No alcanzo el objetivo");

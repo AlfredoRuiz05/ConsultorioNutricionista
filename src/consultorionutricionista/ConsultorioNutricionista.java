@@ -15,7 +15,7 @@ public class ConsultorioNutricionista {
 
     public static void main(String[] args) {
         PacienteData pacienteData = new PacienteData();
-        Paciente paciente = new Paciente("Carlos", 12, "Avellaneda", "13", 1);
+        Paciente paciente = new Paciente("Carlos", 12, "Cosquin", "13", 2);
         //pacienteData.guardarPaciente(paciente);
         // pacienteData.modificarPaciente(paciente);
         //pacienteData.eliminarPaciente(3);
@@ -43,7 +43,7 @@ public class ConsultorioNutricionista {
         // }
         //System.out.println(dietaData.obtenerDietaPorPersona(4));
         //dietaData.borrarDietaPorPaciente(4);
-        Seguimiento seguimiento = new Seguimiento(paciente, LocalDate.of(2007,04,13), 43.1, 42.2, 32.0, 86.50);
+        Seguimiento seguimiento = new Seguimiento(paciente, LocalDate.of(2016,12 ,12), 43.1, 42.2, 32.0, 86.50);
 
         SeguimientoData seguimientoData = new SeguimientoData();
         
