@@ -42,8 +42,8 @@ public class SeguimientoData {
                 ResultSet rs = psVerificarFecha.executeQuery();
                 rs.next();
                 int registrosExisten = rs.getInt(1);
-
-                if (registrosExisten == 0) {
+                //verificar que la fecha de seguimiento no sea mayor que la fecha final 
+                if (registrosExisten == 0  ) {
                     // No existe un registro para esta fecha, se puede agregar
                     String sqlInsertar = "INSERT INTO Seguimiento (idPaciente, fecha, medidaPecho, medidaCintura, medidaCadera, peso) VALUES (?,?,?,?,?,?)";
                     try (PreparedStatement psInsertar = con.prepareStatement(sqlInsertar)) {
