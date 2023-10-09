@@ -15,8 +15,8 @@ import AccesoADatos.SeguimientoData;
 public class ConsultorioNutricionista {
 
     public static void main(String[] args) {
-        //PacienteData pacienteData = new PacienteData();
-        //Paciente paciente = new Paciente("Carlos", 12, "Cosquin", "13", 1);
+        PacienteData pacienteData = new PacienteData();
+        Paciente paciente = new Paciente("Carlos", 12, "Cosquin", "13", 2);
         //pacienteData.guardarPaciente(paciente);
         // pacienteData.modificarPaciente(paciente);
         //pacienteData.eliminarPaciente(3);
@@ -36,19 +36,22 @@ public class ConsultorioNutricionista {
         //      System.out.println(listarComida);
         //  }
         //  System.out.println(comidaData.obtenerComidaPorId(2));
-        //Dieta dieta = new Dieta("Ayuno intermitente",   paciente ,LocalDate.of(2013, 3, 12) , 78.60,86.50,LocalDate.of(2014,03,12) , 1.70 );
-        //DietaData dietaData= new DietaData();
-        //dietaData.guardarDieta(dieta);
+        Dieta dieta = new Dieta("Ayuno intermitente",   paciente ,LocalDate.of(2013, 3, 12) , 78.60,86.50,LocalDate.of(2014,03,12) , 1.70 );
+        DietaData dietaData= new DietaData();
+//        dietaData.guardarDieta(dieta);
         // for(Dieta ListaDieta:dietaData.obtenerDietas()){
         // System.out.println(ListaDieta);
         // }
         //System.out.println(dietaData.obtenerDietaPorPersona(4));
         //dietaData.borrarDietaPorPaciente(4);
-        //Seguimiento seguimiento = new Seguimiento(paciente, LocalDate.of(2014,03,12), 43.1, 42.2, 32.0, 86.50);
+        Seguimiento seguimiento = new Seguimiento(paciente, LocalDate.of(2016,12 ,12), 43.1, 42.2, 32.0, 86.50);
+
+        SeguimientoData seguimientoData = new SeguimientoData();
+        
         
 
-        //seguimientoData.AgregarSeguimiento(seguimiento);
-        //seguimientoData.AgregarSeguimiento(seguimiento);
+        seguimientoData.AgregarSeguimiento(seguimiento);
+        //seguimientoData.objetivoCumplido(dieta);
         //System.out.println(seguimientoData.ObtenerSeguimientoPorID(8));
         // seguimientoData.eliminarSeguimiento(8);
         //System.out.println( seguimientoData.obtenerSeguimientoPorPersona(1));
