@@ -21,32 +21,46 @@ public class ComidaData {
     }
 
     public void guardarComida(Comida comida) {
-
-        String sql = "INSERT INTO comida (nombre, detalle,tipoComida, cantidadCalorias) VALUES (?,?,?,?) ";
-
+        String repeticionCheck="Select * from comida where nombre=?";
         try {
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement psCheck=con.prepareStatement(repeticionCheck);
+            psCheck.setString(1,comida.getNombre());
+            ResultSet result=psCheck.executeQuery();
+            if (!result.isBeforeFirst() ) {    
+                String sql = "INSERT INTO comida (nombre, detalle,tipoComida,cantidadCalorias) VALUES (?,?,?,?) ";
+                try {
+                    PreparedStatement psInsert = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                    psInsert.setString(1, comida.getNombre());
+                    psInsert.setString(2, comida.getDetalle());
+                    psInsert.setString(3, comida.getTipoComida());
+                    psInsert.setInt(4, comida.getCantidadCalorias());
+         
+                    int listaModificada = psInsert.executeUpdate();
+            
+                    ResultSet rs = psInsert.getGeneratedKeys();
+                    if(rs.next()){
+                        comida.setIdComida(rs.getInt(1));
+                    }
+                    if (listaModificada > 0) {
+                        JOptionPane.showMessageDialog(null, " La Comida ha sido añadida con exito");
+                    }
 
-            ps.setString(1, comida.getNombre());
-            ps.setString(2, comida.getDetalle());
-            ps.setString(3, comida.getTipoComida());
-            ps.setInt(4, comida.getCantidadCalorias());
-
-            int listaModificada = ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            if(rs.next()){
-                comida.setIdComida(rs.getInt(1));
+                    psInsert.close();
+                    psCheck.close();
+                } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "No se pudo establecer la conexion");
+                }
+            } else {
+            JOptionPane.showMessageDialog(null, "Comida Repetida");
             }
-            if (listaModificada > 0) {
-
-                JOptionPane.showMessageDialog(null, " La Comida ha sido añadida con exito");
-            }
-
-            ps.close();
-
+            
+        
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo establecer la conexion");
         }
+      
+                
+        
 
     }
 
