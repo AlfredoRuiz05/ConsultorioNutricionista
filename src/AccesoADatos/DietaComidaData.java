@@ -50,25 +50,29 @@ public class DietaComidaData {
     }
     public void BuscarComidasDieta(int idDieta){
         //Error da las comidas de la dieta pero las da repetidas WIP*)
-        
+
         String sql = "Select idComida FROM dietacomida WHERE idDieta=?";
         try {
             PreparedStatement psCheck=con.prepareStatement(sql);
             psCheck.setInt(1,idDieta);
             ResultSet result=psCheck.executeQuery();
+            
             while (result.next()) {
                 String sid = result.getString(1);
                 String sqlComida = "Select idComida FROM dietacomida WHERE idDieta=?";
-                try {
                 PreparedStatement psComida=con.prepareStatement(sql);
                 psComida.setInt(1,idDieta);
                 ResultSet resultcomida=psComida.executeQuery();
+                try {
+
+
                 while (resultcomida.next()) {
                     int blabla=resultcomida.getInt(1);
                     ComidaData cd=new ComidaData();
                     System.out.println(cd.buscarComida(blabla));
+                    result.next();
                 }
-                // Do whatever you want to do with these 2 values
+
                 } catch(SQLException ex) {
                     System.out.println(ex);
                 }

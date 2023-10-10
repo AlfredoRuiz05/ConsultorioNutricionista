@@ -61,15 +61,13 @@ public class ConsultorioNutricionista {
         //System.out.println(seguimientoData.obtenerPesoPorFecha(2));
         //System.out.println(seguimientoData.obtenerPesoPorFecha2(2, LocalDate.of(2019, 05, 14)));
         
-        /*
-        ComidaData comidadata=new ComidaData();
-        Comida comida1=new Comida("Huevo","ahihi","ahihi",90);
-        Comida comida2=new Comida("Bife","ahihi","ahihi",200);
-        Comida comida3=new Comida("Pan","ahihi","ahihi",300);
+        
+        /*ComidaData comidadata=new ComidaData();
+        Comida comida1=new Comida("Banana","ahihi","ahihi",80);
+        Comida comida2=new Comida("manzana","ahihi","ahihi",40);
 
         comidadata.guardarComida(comida1);
         comidadata.guardarComida(comida2);
-        comidadata.guardarComida(comida3);
         */
         
         //SeguimientoData seguimientoData=new SeguimientoData();
@@ -81,7 +79,7 @@ public class ConsultorioNutricionista {
         //dieta.guardarDieta(dietd);
         
         DietaComidaData dcd=new DietaComidaData();
-        //dcd.AgregarComidaDieta(2, 4);
+        //dcd.AgregarComidaDieta(6, 4);
         //dcd.AgregarComidaDieta(3, 4);
         
         dcd.BuscarComidasDieta(4);
