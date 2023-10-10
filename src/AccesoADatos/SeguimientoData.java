@@ -328,4 +328,21 @@ public class SeguimientoData {
         } 
         return VoF;
     }
+    public void ComidasMenosDeCalo(int calorias){
+        /* el nombre del metodo es horrible no sabia q ponerle*/
+        String sql="SELECT nombre FROM comida WHERE cantidadCalorias <= ?";
+        try{
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setInt(1, calorias);
+            ResultSet listaModificada = ps.executeQuery();
+            while (listaModificada.next()) {
+                String sid = listaModificada.getString(1);
+                System.out.println(sid);
+            }
+        } catch(SQLException ex) {
+            System.out.println(ex);
+        }
+    
+    }
+    
 }

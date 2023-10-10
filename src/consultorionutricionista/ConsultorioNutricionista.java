@@ -1,6 +1,7 @@
 package consultorionutricionista;
 
 import AccesoADatos.ComidaData;
+import AccesoADatos.DietaComidaData;
 import AccesoADatos.PacienteData;
 import Entidades.Comida;
 import Entidades.Paciente;
@@ -59,6 +60,32 @@ public class ConsultorioNutricionista {
         //System.out.println(seguimientoData.encontrarFechaMasReciente(2));
         //System.out.println(seguimientoData.obtenerPesoPorFecha(2));
         //System.out.println(seguimientoData.obtenerPesoPorFecha2(2, LocalDate.of(2019, 05, 14)));
+        
+        /*
+        ComidaData comidadata=new ComidaData();
+        Comida comida1=new Comida("Huevo","ahihi","ahihi",90);
+        Comida comida2=new Comida("Bife","ahihi","ahihi",200);
+        Comida comida3=new Comida("Pan","ahihi","ahihi",300);
+
+        comidadata.guardarComida(comida1);
+        comidadata.guardarComida(comida2);
+        comidadata.guardarComida(comida3);
+        */
+        
+        //SeguimientoData seguimientoData=new SeguimientoData();
+        //seguimientoData.ComidasMenosDeCalo(200);
+        
+        //DietaData dieta=new DietaData();
+        //Dieta dietd=new Dieta();
+        
+        //dieta.guardarDieta(dietd);
+        
+        DietaComidaData dcd=new DietaComidaData();
+        //dcd.AgregarComidaDieta(2, 4);
+        //dcd.AgregarComidaDieta(3, 4);
+        
+        dcd.BuscarComidasDieta(4);
+
     }
 
 }
