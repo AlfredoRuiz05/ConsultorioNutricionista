@@ -30,30 +30,33 @@ public class SeguimientoData {
 
     public void AgregarSeguimiento(Seguimiento seguimiento) {
     try {
-        // Validar que seguimiento y paciente sean válidos
+     
         if (seguimiento == null || seguimiento.getPaciente() == null) {
             JOptionPane.showMessageDialog(null, "Datos de seguimiento incorrectos.");
             return;
         }
-
-        String fechaDieta = "SELECT dieta.fechafinal FROM dieta JOIN seguimiento ON (seguimiento.idPaciente = dieta.idPaciente) WHERE seguimiento.idPaciente = ?";
-
-        try (PreparedStatement psFechaFinal = con.prepareStatement(fechaDieta)) {
-            psFechaFinal.setInt(1, seguimiento.getPaciente().getIdPaciente());
-            ResultSet rsDieta = psFechaFinal.executeQuery();
-
-            if (rsDieta.next()) {
-                LocalDate fechaFinal = rsDieta.getDate("fechafinal").toLocalDate();
+        
+        String fdieta= "SELECT fechaFinal, fechaInicial FROM dieta WHERE idPaciente = ?";
+       try( PreparedStatement psfechaF= con.prepareStatement(fdieta)){
+        psfechaF.setInt(1, seguimiento.getPaciente().getIdPaciente());
+        ResultSet rsf= psfechaF.executeQuery();
+        
+        if(rsf.next()){
+            LocalDate fechaFinal= rsf.getDate("fechafinal").toLocalDate();
+            LocalDate fechaInicial= rsf.getDate("fechaInicial").toLocalDate();
+                
                 String sqlVerificarFecha = "SELECT COUNT(*) FROM Seguimiento WHERE idPaciente = ? AND fecha = ?";
+                
                 try (PreparedStatement psVerificarFecha = con.prepareStatement(sqlVerificarFecha)) {
                     psVerificarFecha.setInt(1, seguimiento.getPaciente().getIdPaciente());
                     psVerificarFecha.setDate(2, Date.valueOf(seguimiento.getFecha()));
 
                     ResultSet rs = psVerificarFecha.executeQuery();
                     if (rs.next()) {
+                        
                         int registrosExisten = rs.getInt(1);
 
-                        if (registrosExisten == 0 && seguimiento.getFecha().isBefore(fechaFinal)) {
+                        if (registrosExisten == 0 && seguimiento.getFecha().compareTo(fechaFinal)<=0 && seguimiento.getFecha().compareTo(fechaInicial)>0 ) {
                             String sqlInsertar = "INSERT INTO Seguimiento (idPaciente, fecha, medidaPecho, medidaCintura, medidaCadera, peso) VALUES (?,?,?,?,?,?)";
                             try (PreparedStatement psInsertar = con.prepareStatement(sqlInsertar)) {
                                 psInsertar.setInt(1, seguimiento.getPaciente().getIdPaciente());
@@ -71,74 +74,25 @@ public class SeguimientoData {
                                 }
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "No se pueden repetir fechas o la fecha de seguimiento es posterior a la fecha final de la dieta.");
-                        }
+                            JOptionPane.showMessageDialog(null, "No se pueden repetir fechas, ni la fecha puede ser inferior o superior a las previstas");
+                            }
                     }
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró la fecha final de la dieta para el paciente.");
-            }
         }
+            }
+       }
+       
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Error al establecer la conexión o ejecutar la consulta: " + ex.getMessage());
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Error inesperado: " + ex.getMessage());
     }
+    
 }
+    
 
 
-//    public void AgregarSeguimiento(Seguimiento seguimiento) {
-//
-//        try {
-//
-//            String fechaDieta = "SELECT fechafinal FROM dieta JOIN seguimiento ON (seguimiento.idPaciente=dieta.idPaciente ) WHERE idPaciente =? ";
-//
-//            try (PreparedStatement psFechaFinal = con.prepareStatement(fechaDieta)) {
-//
-//                psFechaFinal.setInt(1, seguimiento.getPaciente().getIdPaciente());
-//
-//                ResultSet rsDieta = psFechaFinal.executeQuery();
-//                rsDieta.next();
-//                LocalDate fechaFinal = rsDieta.getDate("fechafinal").toLocalDate();
-//
-//                String sqlVerificarFecha = "SELECT COUNT(*) FROM Seguimiento WHERE idPaciente=? AND fecha=?";
-//                try (PreparedStatement psVerificarFecha = con.prepareStatement(sqlVerificarFecha)) {
-//                    //se establecen como parametros del PS a idPaciente y fecha
-//                    psVerificarFecha.setInt(1, seguimiento.getPaciente().getIdPaciente());
-//                    psVerificarFecha.setDate(2, Date.valueOf(seguimiento.getFecha()));
-//
-//                    ResultSet rs = psVerificarFecha.executeQuery();
-//                    rs.next();
-//                    int registrosExisten = rs.getInt(1);
-//                    //verificar que la fecha de seguimiento no sea mayor que la fecha final 
-//                    if (registrosExisten == 0 && seguimiento.getFecha().isBefore(fechaFinal)) {
-//                        // No existe un registro para esta fecha, se puede agregar
-//                        String sqlInsertar = "INSERT INTO Seguimiento (idPaciente, fecha, medidaPecho, medidaCintura, medidaCadera, peso) VALUES (?,?,?,?,?,?)";
-//                        try (PreparedStatement psInsertar = con.prepareStatement(sqlInsertar)) {
-//
-//                            psInsertar.setInt(1, seguimiento.getPaciente().getIdPaciente());
-//                            psInsertar.setDate(2, Date.valueOf(seguimiento.getFecha()));
-//                            psInsertar.setDouble(3, seguimiento.getMedidaPecho());
-//                            psInsertar.setDouble(4, seguimiento.getMedidaCintura());
-//                            psInsertar.setDouble(5, seguimiento.getMedidaCadera());
-//                            psInsertar.setDouble(6, seguimiento.getPeso());
-//
-//                            int filasModificadas = psInsertar.executeUpdate();
-//                            if (filasModificadas == 1) {
-//                                JOptionPane.showMessageDialog(null, "El seguimiento ha sido añadido con éxito");
-//                            } else {
-//                                JOptionPane.showMessageDialog(null, "Error al agregar el seguimiento");
-//                            }
-//                        }
-//                    } else {
-//                        JOptionPane.showMessageDialog(null, "No se pueden repetir fechas");
-//                    }
-//                }
-//            }
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Error al establecer la conexión: " + ex.getMessage());
-//        }
-//    }
+
+
     public Seguimiento ObtenerSeguimientoPorID(int id) {
 
         Seguimiento seguimiento = null;
@@ -246,6 +200,105 @@ public class SeguimientoData {
         return mayorFecha;
     }
 
+    
+    public double  CalcularIMCFinal(int id){
+        
+        
+   
+       double   IMCFinal=0;
+       
+        
+     String sql= "Select altura , pesoFinal FROM DIETA  WHERE idPaciente = ? ";
+     
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            
+            ps.setInt(1, id);
+            
+            ResultSet resultado= ps.executeQuery();
+            
+            resultado.next();
+            
+            double  alturaFinal= resultado.getDouble("altura");
+           double pesoFinal = resultado.getDouble("pesoFinal");
+            
+            IMCFinal= pesoFinal / (alturaFinal*alturaFinal);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SeguimientoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+        return IMCFinal;
+     
+     
+     
+    }
+    
+    
+    
+    
+    public double  CalcularIMCInicial(int id){
+        
+        
+        
+       double IMCInicial=0;
+      
+       
+        
+     String sql= "Select altura , pesoInicial FROM DIETA  WHERE idPaciente = ? ";
+     
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            
+            ps.setInt(1, id);
+            
+            ResultSet resultado= ps.executeQuery();
+            
+            resultado.next();
+            
+            double  altura= resultado.getDouble("altura");
+           double peso = resultado.getDouble("pesoInicial");
+            
+            IMCInicial= peso / (altura*altura);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SeguimientoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+        return IMCInicial;
+     
+     
+     
+    }
+    
+    
+    
+    public List <Paciente> ObjetivoNoCumplido(Dieta dieta){
+        
+        Paciente paciente = new Paciente();
+        ArrayList<Paciente> pacientes = new ArrayList<>();
+       if(objetivoCumplido( dieta)==false){
+        
+           pacientes.add(paciente);
+          
+           
+    }
+       return pacientes; 
+    }
+    
+    public List <Paciente> ObjetivoCumplido(Dieta dieta){
+        
+        Paciente paciente = new Paciente();
+        ArrayList<Paciente> pacientes = new ArrayList<>();
+       if(objetivoCumplido( dieta)==true){
+        
+           pacientes.add(paciente);
+          
+           
+    }
+       return pacientes; 
+    }
+    
     public double obtenerPesoPorFecha(int id) {
         double peso = 0;
 
@@ -266,12 +319,13 @@ public class SeguimientoData {
         return peso;
     }
 
-    public void objetivoCumplido(Dieta dieta) {
+    public boolean objetivoCumplido(Dieta dieta) {
+        
+        boolean VoF=false;
         if ((dieta.getFechaFinal().equals(encontrarFechaMasReciente(dieta.getPaciente().getIdPaciente()))) && (dieta.getPesoFinal() == obtenerPesoPorFecha(dieta.getPaciente().getIdPaciente()))) {
 
-            JOptionPane.showMessageDialog(null, "El objetivo fue alcanzado");
-        } else {
-            JOptionPane.showMessageDialog(null, "No alcanzo el objetivo");
-        }
+          VoF=true;
+        } 
+        return VoF;
     }
 }

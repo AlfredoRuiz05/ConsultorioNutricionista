@@ -171,20 +171,7 @@ return actual;
     }
 
 
-    
-    
-    public void Objetivo (){
-        
-        
-        
-    }
-    
-    
-    
-    
-    
-    
-    
+   
     public void borrarDietaPorPaciente( int idPaciente) {
         try {
             String sql = "DELETE FROM dieta WHERE idPaciente = ?";
@@ -204,38 +191,7 @@ return actual;
     }
     
     
-//    
-//     public List<Paciente> ObjetivosNoCumplidos ( int idDieta ) {
-//
-//        ArrayList<Paciente> pacientes = new ArrayList<>();
-//        String sql = "SELECT * FROM paciente "
-//                + "WHERE estado = 1 AND idMateria NOT IN "
-//                + "(SELECT idMateria FROM inscripcion WHERE idAlumno = ?)";
-//
-////        String sql="SELECT *FROM materia"
-////                + "WHERE estado=1 AND idMateria not in"
-////                + "(SELECT idMateria FROM inscripcion WHERE idAlumno=?)";
-//        try {
-//            PreparedStatement ps = con.prepareStatement(sql);
-//            ps.setInt(1, idAlumno);
-//            ResultSet resultado = ps.executeQuery();
-//            while (resultado.next()) {
-//                Materia materia = new Materia();
-//                materia.setIdMateria(resultado.getInt("idMateria"));
-//                materia.setNombre(resultado.getString("nombre"));
-//                materia.setAnioMateria(resultado.getInt("año"));
-//                materias.add(materia);
-//
-//            }
-//            ps.close();
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "No se pudieron obtener los datos de la tabla " + ex);
-//        }
-//        return materias;
-//    }
 
-    
-    
     
     
     
