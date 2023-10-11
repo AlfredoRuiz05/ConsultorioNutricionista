@@ -7,24 +7,21 @@ package Vistas;
 
 import AccesoADatos.PacienteData;
 import Entidades.Paciente;
-import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
-import org.mariadb.jdbc.util.StringUtils;
 
 /**
  *
  * @author ACER
  */
-public class GestionPaciente extends javax.swing.JInternalFrame {
-
-    Paciente paciente = new Paciente();
+public class GestionPaciente extends javax.swing.JFrame {
+Paciente paciente = new Paciente();
     PacienteData pacienteData = new PacienteData();
-
     /**
-     * Creates new form Paciente
+     * Creates new form GestionPaciente
      */
     public GestionPaciente() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -50,8 +47,12 @@ public class GestionPaciente extends javax.swing.JInternalFrame {
         jbModificar = new javax.swing.JButton();
         jbBaja = new javax.swing.JButton();
         jbBuscar = new javax.swing.JButton();
-        jbSalir = new javax.swing.JButton();
+        jbVolver = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Gestion de Pacientes");
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Gestion de Pacientes");
 
         jLabel2.setText("Nombre Completo");
@@ -90,10 +91,10 @@ public class GestionPaciente extends javax.swing.JInternalFrame {
             }
         });
 
-        jbSalir.setText("Salir");
-        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+        jbVolver.setText("Volver al Menu");
+        jbVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbSalirActionPerformed(evt);
+                jbVolverActionPerformed(evt);
             }
         });
 
@@ -118,20 +119,17 @@ public class GestionPaciente extends javax.swing.JInternalFrame {
                                 .addComponent(jbBuscar))
                             .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jbAgregar)
                         .addGap(37, 37, 37)
                         .addComponent(jbModificar)
                         .addGap(36, 36, 36)
                         .addComponent(jbBaja)
-                        .addGap(60, 60, 60)
-                        .addComponent(jbSalir)))
+                        .addGap(49, 49, 49)
+                        .addComponent(jbVolver)))
                 .addContainerGap(34, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(240, 240, 240))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +162,7 @@ public class GestionPaciente extends javax.swing.JInternalFrame {
                     .addComponent(jbAgregar)
                     .addComponent(jbModificar)
                     .addComponent(jbBaja)
-                    .addComponent(jbSalir))
+                    .addComponent(jbVolver))
                 .addContainerGap(104, Short.MAX_VALUE))
         );
 
@@ -176,28 +174,11 @@ public class GestionPaciente extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
-
-        try {
-            int dni = Integer.parseInt(jtDni.getText());
-
-            Paciente busquedaPaciente = pacienteData.buscarPacientePorDni(dni);
-
-            jtNombre.setText(busquedaPaciente.getNombre());
-            jtDomicilio.setText(busquedaPaciente.getDomicilio());
-            jtTelefono.setText(busquedaPaciente.getTelefono());
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "El dni debe ser numerico");
-        }
-    }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
         int dni;
@@ -265,7 +246,7 @@ public class GestionPaciente extends javax.swing.JInternalFrame {
                 int dni = Integer.parseInt(jtDni.getText());
                 String domicilio = jtDomicilio.getText();
                 String telefono = jtTelefono.getText();
-int idPaciente = pacienteData.buscarPacientePorDni(dni).getIdPaciente();
+                int idPaciente = pacienteData.buscarPacientePorDni(dni).getIdPaciente();
                 paciente = new Paciente(nombre, dni, domicilio, telefono,idPaciente);
 
                 pacienteData.eliminarPaciente(idPaciente);
@@ -277,10 +258,62 @@ int idPaciente = pacienteData.buscarPacientePorDni(dni).getIdPaciente();
         }
     }//GEN-LAST:event_jbBajaActionPerformed
 
-    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
-        dispose();
-    }//GEN-LAST:event_jbSalirActionPerformed
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
 
+        try {
+            int dni = Integer.parseInt(jtDni.getText());
+
+            Paciente busquedaPaciente = pacienteData.buscarPacientePorDni(dni);
+
+            jtNombre.setText(busquedaPaciente.getNombre());
+            jtDomicilio.setText(busquedaPaciente.getDomicilio());
+            jtTelefono.setText(busquedaPaciente.getTelefono());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "El dni debe ser numerico");
+        }
+    }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
+        Principal principal= new Principal();
+        this.setVisible(false);
+        principal.show(true);
+    }//GEN-LAST:event_jbVolverActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(GestionPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(GestionPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(GestionPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GestionPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GestionPaciente().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -293,13 +326,13 @@ int idPaciente = pacienteData.buscarPacientePorDni(dni).getIdPaciente();
     private javax.swing.JButton jbBaja;
     private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbModificar;
-    private javax.swing.JButton jbSalir;
+    private javax.swing.JButton jbVolver;
     private javax.swing.JTextField jtDni;
     private javax.swing.JTextField jtDomicilio;
     private javax.swing.JTextField jtNombre;
     private javax.swing.JTextField jtTelefono;
     // End of variables declaration//GEN-END:variables
- public boolean isNumeric(String cadena) {
+public boolean isNumeric(String cadena) {
 
         boolean resultado;
 
@@ -312,5 +345,6 @@ int idPaciente = pacienteData.buscarPacientePorDni(dni).getIdPaciente();
 
         return resultado;
     }
+
 
 }

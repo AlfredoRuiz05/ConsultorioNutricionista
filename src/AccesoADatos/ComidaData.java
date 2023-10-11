@@ -98,10 +98,10 @@ public class ComidaData {
         return comida;
     }
 
-    public void modificarComida(Comida comida) {
-        
+   public boolean modificarComida(Comida comida) {
+        boolean actual=false;
         try {
-        String sql = "UPDATE comida SET nombre=?, detalle=?, tipoComida=?, cantidadCalorias=? WHERE idComida=?";
+        String sql = "UPDATE comida SET nombre=?, detalle=?, tipoComida=?, cantidadCalorias=? WHERE nombre=?";
         
         PreparedStatement ps = con.prepareStatement(sql);
         
@@ -114,15 +114,31 @@ public class ComidaData {
         int exito = ps.executeUpdate();
         
         if (exito == 1) {
-            JOptionPane.showMessageDialog(null, "Comida Modificada");
+            actual=true;
         } else {
-            JOptionPane.showMessageDialog(null, "La Comida no existe");
+            actual=false;
         }
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Error al Conectar con la tabla comida: " + ex.getMessage());
     }
+        return actual;
     }
 
+     public void eliminarComida(String nombreComida) {
+        try {
+            String sql = "DELETE FROM comida WHERE comida.nombre=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nombreComida);
+            int exito = ps.executeUpdate();
+            if (exito > 0) {
+                JOptionPane.showMessageDialog(null, "Comida eliminada");
+            } else {
+                JOptionPane.showMessageDialog(null, "La comida no existe");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al Conectar con la tabla" + ex.getMessage());
+        }
+    }
 
     public List<Comida> listarComidas() {
         Comida comida = null;
@@ -165,4 +181,40 @@ public class ComidaData {
     }
     return null; 
 }
+    public List <Comida> obtenerComidaPorNombre(String nombreComida) {
+        ArrayList<Comida> listasComidas= new ArrayList<>();
+         Comida comida = null;
+
+        try {
+            String sql = "SELECT nombre,detalle,tipoComida,cantidadCalorias,idComida FROM comida WHERE nombre = ?";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, nombreComida);
+
+            ResultSet resultado = ps.executeQuery();
+
+            if (resultado.next()) {
+
+                comida = new Comida();
+
+                
+                comida.setNombre(nombreComida);
+                comida.setDetalle(resultado.getString("detalle"));
+                comida.setTipoComida(resultado.getString("tipoComida"));
+                comida.setCantidadCalorias(resultado.getInt("cantidadCalorias"));
+                comida.setIdComida(resultado.getInt("idComida"));
+                listasComidas.add(comida);
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe esa Comida");
+            }
+
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error en la conexion" + ex);
+        }
+
+        return listasComidas;
+    }
 }

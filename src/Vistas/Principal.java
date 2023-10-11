@@ -24,6 +24,8 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
          this.setLocationRelativeTo(null);
+        
+        
           
     }
 
@@ -45,7 +47,6 @@ public class Principal extends javax.swing.JFrame {
         jbAtencion = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        escritorio = new javax.swing.JDesktopPane();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -129,17 +130,6 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
-        javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
-        escritorio.setLayout(escritorioLayout);
-        escritorioLayout.setHorizontalGroup(
-            escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        escritorioLayout.setVerticalGroup(
-            escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 730, Short.MAX_VALUE)
-        );
-
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         jLabel2.setText("Bienvenido");
 
@@ -147,19 +137,17 @@ public class Principal extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(444, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(319, 319, 319)
                 .addComponent(jLabel2)
-                .addGap(280, 280, 280))
+                .addContainerGap(405, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
+                .addGap(60, 60, 60)
                 .addComponent(jLabel2)
-                .addGap(59, 59, 59)
-                .addComponent(escritorio))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -182,30 +170,20 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPacienteActionPerformed
-         escritorio.removeAll();
-        escritorio.repaint();
-        GestionPaciente bpn = new GestionPaciente();
-        bpn.setVisible(true);
-        escritorio.add(bpn);
-        escritorio.moveToFront(bpn);
+          GestionPaciente gp = new GestionPaciente();
+          this.setVisible(false);
+        gp.show(true);
     }//GEN-LAST:event_jbPacienteActionPerformed
 
     private void jbComidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbComidasActionPerformed
-        escritorio.removeAll();
-        escritorio.repaint();
-        GestionComidas bpn = new GestionComidas();
-        bpn.setVisible(true);
-        escritorio.add(bpn);
-        escritorio.moveToFront(bpn);
+          GestionComidas jf1 = new GestionComidas();
+          this.setVisible(false);
+        jf1.show(true);
+        
     }//GEN-LAST:event_jbComidasActionPerformed
 
     private void jbDietasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDietasActionPerformed
-        escritorio.removeAll();
-        escritorio.repaint();
-        ConsultaDieta bpn = new ConsultaDieta();
-        bpn.setVisible(true);
-        escritorio.add(bpn);
-        escritorio.moveToFront(bpn);
+     
     }//GEN-LAST:event_jbDietasActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
@@ -238,6 +216,7 @@ public class Principal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -248,7 +227,6 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane escritorio;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
