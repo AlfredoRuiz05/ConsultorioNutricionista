@@ -86,6 +86,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setText("Menu");
 
         jbAtencion.setText("Atencion/Consulta");
+        jbAtencion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAtencionActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Consultar datos");
 
@@ -170,25 +175,39 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPacienteActionPerformed
-          GestionPaciente gp = new GestionPaciente();
-          this.setVisible(false);
-        gp.show(true);
+        jPanel3.removeAll();
+        jPanel3.repaint();
+        GestionPaciente bpn = new GestionPaciente();
+        bpn.setVisible(true);
+        jPanel3.add(bpn);
     }//GEN-LAST:event_jbPacienteActionPerformed
 
     private void jbComidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbComidasActionPerformed
-          GestionComidas jf1 = new GestionComidas();
-          this.setVisible(false);
-        jf1.show(true);
+
+        jPanel3.removeAll();
+        jPanel3.repaint();
+        GestionComidas bpn = new GestionComidas();
+        bpn.setVisible(true);
+        jPanel3.add(bpn);
         
     }//GEN-LAST:event_jbComidasActionPerformed
 
     private void jbDietasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDietasActionPerformed
-     
+        jPanel3.removeAll();
+        jPanel3.repaint();
+        GestionDieta bpn = new GestionDieta();
+        bpn.setVisible(true);
+        jPanel3.add(bpn);     
     }//GEN-LAST:event_jbDietasActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
        System.exit(0);
     }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jbAtencionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAtencionActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jbAtencionActionPerformed
 
     /**
      * @param args the command line arguments
