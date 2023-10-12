@@ -56,7 +56,7 @@ public class SeguimientoData {
                         
                         int registrosExisten = rs.getInt(1);
 
-                        if (registrosExisten == 0 && seguimiento.getFecha().compareTo(fechaFinal)<=0 && seguimiento.getFecha().compareTo(fechaInicial)>0 ) {
+                        if (registrosExisten == 0 && seguimiento.getFecha().compareTo(fechaFinal)<=0 && seguimiento.getFecha().compareTo(fechaInicial)>=0 ) {
                             String sqlInsertar = "INSERT INTO Seguimiento (idPaciente, fecha, medidaPecho, medidaCintura, medidaCadera, peso) VALUES (?,?,?,?,?,?)";
                             try (PreparedStatement psInsertar = con.prepareStatement(sqlInsertar)) {
                                 psInsertar.setInt(1, seguimiento.getPaciente().getIdPaciente());
@@ -134,7 +134,7 @@ public class SeguimientoData {
 
     public void eliminarSeguimiento(int id) {
         try {
-            String sql = "DELETE FROM seguimiento WHERE idSeguimiento=?";
+            String sql = "DELETE FROM seguimiento WHERE idPaciente=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             int exito = ps.executeUpdate();
@@ -345,4 +345,85 @@ public class SeguimientoData {
     
     }
     
+    
+    
+    
+    
+    
+     public Seguimiento ObtenerSeguimientoPorIDPaciente(int id) {
+
+        Seguimiento seguimiento = null;
+
+        try {
+            String sql = "SELECT idSeguimiento, idPaciente ,	fecha	, medidaPecho ,	medidaCintura ,	medidaCadera FROM seguimiento WHERE idPaciente = ? ";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, id);
+
+            ResultSet resultado = ps.executeQuery();
+
+            if (resultado.next()) {
+
+                seguimiento = new Seguimiento();
+                PacienteData pacientedata = new PacienteData();
+
+                seguimiento.setIdSeguimiento(id);
+                int idPaciente = resultado.getInt("idPaciente");
+                seguimiento.setPaciente(pacientedata.obtenerPacientePorId(idPaciente));
+                seguimiento.setFecha(resultado.getDate("fecha").toLocalDate());
+                seguimiento.setMedidaPecho(resultado.getDouble("medidaPecho"));
+                seguimiento.setMedidaCintura(resultado.getDouble("medidaCintura"));
+                seguimiento.setMedidaCadera(resultado.getDouble("medidaCadera"));
+
+            }
+
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error en la conexion" + ex);
+
+        }
+
+        return seguimiento;
+
+    }
+     
+     
+     
+     
+    public boolean modificarSeguimiento(int idPaciente, Seguimiento seguimiento) {
+
+        boolean actual = false;
+
+        try {
+           String sql = "UPDATE Seguimiento SET fecha=?, medidaPecho=?, medidaCintura=?, medidaCadera=? WHERE idPaciente=?";
+
+
+
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDate(1, Date.valueOf(seguimiento.getFecha()));
+            ps.setDouble(2, seguimiento.getMedidaPecho());
+            ps.setDouble(3, seguimiento.getMedidaCintura());
+            ps.setDouble(4, seguimiento.getMedidaCadera());
+            ps.setInt(5, idPaciente);
+            
+            int exito = ps.executeUpdate();
+
+            if (exito == 1) {
+                actual = true;
+            } else {
+                actual = false;
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al conectarse con la tabla inscripcion " + ex.getMessage());
+        }
+        return actual;
+    }
+
+
+    
 }
+

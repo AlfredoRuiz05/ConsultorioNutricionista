@@ -9,12 +9,12 @@ package Vistas;
  *
  * @author ACER
  */
-public class Seguimiento extends javax.swing.JInternalFrame {
+public class SeguimientoVista extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ConsultaAtencion
      */
-    public Seguimiento() {
+    public SeguimientoVista() {
         initComponents();
     }
 

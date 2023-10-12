@@ -1,4 +1,3 @@
-
 package AccesoADatos;
 
 import java.sql.Connection;
@@ -144,14 +143,15 @@ public class DietaData {
         boolean actual=false;
         
         try {
-            String sql = "UPDATE dieta SET fechaInicial=?,pesoInicial,pesoFinal,fechaFinal WHERE idPaciente=?";
+                String sql = "UPDATE dieta SET fechaInicial=?, pesoInicial=?, pesoFinal=?, fechaFinal=? WHERE idPaciente=?";
+
             
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDate(1,Date.valueOf(dieta.getFechaInicial()));
             ps.setDouble(2, dieta.getPesoInicial() );
             ps.setDouble(3, dieta.getPesoFinal());
              ps.setDate(4,Date.valueOf(dieta.getFechaFinal()));
-            
+            ps.setInt(5, idPaciente);
             int exito = ps.executeUpdate();
 
            
@@ -191,6 +191,43 @@ return actual;
     }
     
     
+public Dieta obtenerUnaDietaPorPersona(int id) {
+    Dieta dieta = null; // Cambio el tipo de retorno y creo una variable para almacenar la dieta
+    
+    try {
+        String sql = "SELECT idDieta, nombre, idPaciente, fechaInicial, pesoInicial, pesoFinal, fechaFinal, altura FROM dieta WHERE idPaciente=?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet resultado = ps.executeQuery();
+
+        if (resultado.next()) { // Cambio el while a un if, ya que solo necesitas una dieta
+            dieta = new Dieta();
+
+            dieta.setIdDieta(resultado.getInt("idDieta"));
+            dieta.setNombre(resultado.getString("nombre"));
+
+            PacienteData pacienteData = new PacienteData();
+            int idPaciente = resultado.getInt("idPaciente");
+            dieta.setPaciente(pacienteData.obtenerPacientePorId(idPaciente));
+
+            dieta.setFechaInicial(resultado.getDate("fechaInicial").toLocalDate());
+
+            dieta.setPesoInicial(resultado.getDouble("pesoInicial"));
+            dieta.setPesoFinal(resultado.getDouble("pesoFinal"));
+            dieta.setFechaFinal(resultado.getDate("fechaFinal").toLocalDate());
+            dieta.setAltura(resultado.getDouble("altura"));
+        }
+
+        ps.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "No se pudieron obtener los datos de la tabla inscripcion" + ex);
+    } catch (NullPointerException ex) {
+        JOptionPane.showMessageDialog(null, "No se pudieron obtener los datos" + ex.getMessage());
+    }
+    
+    return dieta; // Devuelve la dieta encontrada o null si no se encuentra ninguna
+}
 
     
     
