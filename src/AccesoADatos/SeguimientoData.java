@@ -132,11 +132,38 @@ public class SeguimientoData {
 
     }
 
-    public void eliminarSeguimiento(int id) {
+    
+    
+    
+    
+     public void eliminarSeguimientoPorId(int id) {
+    
         try {
-            String sql = "DELETE FROM seguimiento WHERE idPaciente=?";
+            String sql = "DELETE FROM seguimiento WHERE idSeguimiento=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Seguimiento dado de baja");
+            } else {
+                JOptionPane.showMessageDialog(null, "El Segumiento no existe");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al Conectar con la tabla Segumiento" + ex.getMessage());
+        }
+    }
+    
+    
+    
+    
+    
+    public void eliminarSeguimiento(int id,int idSeguimiento) {
+    
+        try {
+            String sql = "DELETE FROM seguimiento WHERE idPaciente=? And idSeguimiento=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setInt(2, idSeguimiento);
             int exito = ps.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Seguimiento dado de baja");

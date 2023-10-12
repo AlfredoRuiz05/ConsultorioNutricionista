@@ -39,14 +39,14 @@ public class Consultas extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(172, 172, 172)
                 .addComponent(jLabel1)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addContainerGap(617, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(80, 80, 80)
                 .addComponent(jLabel1)
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addContainerGap(483, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

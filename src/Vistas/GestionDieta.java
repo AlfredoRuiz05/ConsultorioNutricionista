@@ -494,7 +494,11 @@ public class GestionDieta extends javax.swing.JInternalFrame {
         
         SeguimientoData seguimientoData= new SeguimientoData();
         
-        seguimientoData.eliminarSeguimiento(idPaciente);
+        Seguimiento seguimiento = new Seguimiento();
+        
+        int IdSeguimiento= seguimiento.getIdSeguimiento();
+        
+        seguimientoData.eliminarSeguimiento(idPaciente, IdSeguimiento);
         
     }
     
