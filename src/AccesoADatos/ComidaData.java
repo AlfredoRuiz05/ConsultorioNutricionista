@@ -98,11 +98,10 @@ public class ComidaData {
         return comida;
     }
 
-   public boolean modificarComida(Comida comida) {
-        boolean actual=false;
-        try {
-        String sql = "UPDATE comida SET nombre=?, detalle=?, tipoComida=?, cantidadCalorias=? WHERE nombre=?";
-        
+public boolean modificarComida(Comida comida) {
+    try {
+        String sql = "UPDATE comida SET nombre=?, detalle=?, tipoComida=?, cantidadCalorias=? WHERE idComida=?";
+
         PreparedStatement ps = con.prepareStatement(sql);
         
         ps.setString(1, comida.getNombre());
@@ -113,16 +112,12 @@ public class ComidaData {
         
         int exito = ps.executeUpdate();
         
-        if (exito == 1) {
-            actual=true;
-        } else {
-            actual=false;
-        }
+        return exito == 1;
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Error al Conectar con la tabla comida: " + ex.getMessage());
+        return false;
     }
-        return actual;
-    }
+}
 
      public void eliminarComida(String nombreComida) {
         try {

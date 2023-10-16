@@ -7,6 +7,10 @@ package Vistas;
 
 import AccesoADatos.ComidaData;
 import Entidades.Comida;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
@@ -154,26 +158,44 @@ public class AgregarComida extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+private final Map<String, List<Comida>> comidasPorHorario = new HashMap<>();
     private void jbAgregar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregar5ActionPerformed
-        String nombreComida=jtNombre.getText();
-        String detalle=jtaDescripcion.getText();
-        String tipoComida=jbTipoComida.getSelectedItem().toString();
-        if (nombreComida.isEmpty() || detalle.isEmpty() || tipoComida.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos");
-        }else{
-            try{
-                int calorias=Integer.parseInt(jtCalorias.getText());
-                Comida comida=new Comida(nombreComida,detalle,tipoComida,calorias);
-                ComidaData comidaData=new ComidaData();
-                comidaData.guardarComida(comida);
-            }catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Las calorias deben ser un numero entero");
-            }catch (NullPointerException ex) {
-                JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos");
-            }
-        }
+        String nombreComida = jtNombre.getText();
+    String detalle = jtaDescripcion.getText();
+    String tipoComida = jbTipoComida.getSelectedItem().toString();
+    String horario = jbTipoComida.getSelectedItem().toString(); // Suponiendo que tengas un JComboBox para seleccionar el horario.
 
+    if (nombreComida.isEmpty() || detalle.isEmpty() || tipoComida.isEmpty() || horario.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos");
+    } else {
+        try {
+            int calorias = Integer.parseInt(jtCalorias.getText());
+            Comida comida = new Comida(nombreComida, detalle, tipoComida, calorias);
+
+            if (!comidasPorHorario.containsKey(horario)) {
+                comidasPorHorario.put(horario, new ArrayList<>());
+            }
+
+            List<Comida> comidasEnHorario = comidasPorHorario.get(horario);
+            
+            // Verificar si la comida ya se ha agregado para este horario
+            boolean comidaRepetida = comidasEnHorario.stream()
+                    .anyMatch(c -> c.getNombre().equals(nombreComida));
+
+            if (comidaRepetida) {
+                JOptionPane.showMessageDialog(null, "Ya se ha agregado la misma comida para este horario.");
+            } else {
+                comidasEnHorario.add(comida);
+                ComidaData comidaData = new ComidaData();
+                comidaData.guardarComida(comida);
+                JOptionPane.showMessageDialog(null, "Comida guardada exitosamente para el horario: " + horario);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Las calorías deben ser un número entero");
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos");
+        }
+    }
     }//GEN-LAST:event_jbAgregar5ActionPerformed
 
     private void jbSalir5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalir5ActionPerformed

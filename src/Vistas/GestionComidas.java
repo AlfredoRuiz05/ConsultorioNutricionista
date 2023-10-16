@@ -246,30 +246,28 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
-         int cont=0;
+        int cont = 0;
 
-       ComidaData comidaData = new ComidaData();
-         Comida comida;
+        ComidaData comidaData = new ComidaData();
+        Comida comida;
         for (int i = 0; i < this.TablaComida.getRowCount(); i++) {
-            
             String nombre = this.tablaModelo.getValueAt(i, 0).toString();
-            String detalle= this.tablaModelo.getValueAt(i, 1).toString();
-           String tipoComida= this.tablaModelo.getValueAt(i, 2).toString();
-           int calorias=Integer.parseInt(this.tablaModelo.getValueAt(i, 3).toString());
-      comida=new Comida(nombre,detalle,tipoComida,calorias);
-            
-             comidaData.modificarComida(comida);
-             
-             if(comidaData.modificarComida(comida)==true){
-                 cont++;}
-            
-        }
-        if(cont>=1){
-                JOptionPane.showMessageDialog(null, "La Comida se modifico correctamente");
-            } else {
+            String detalle = this.tablaModelo.getValueAt(i, 1).toString();
+            String tipoComida = this.tablaModelo.getValueAt(i, 2).toString();
+            int calorias = Integer.parseInt(this.tablaModelo.getValueAt(i, 3).toString());
+            int idComida = Integer.parseInt(this.tablaModelo.getValueAt(i, 4).toString()); // Supongamos que la columna 4 contiene el idComida
+            comida = new Comida(nombre, detalle, tipoComida, calorias, idComida);
 
-                JOptionPane.showMessageDialog(null, "La comida no se pudo modificar");
+            if (comidaData.modificarComida(comida)) {
+                cont++;
             }
+        }
+
+        if (cont >= 1) {
+            JOptionPane.showMessageDialog(null, "La Comida se modificó correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "La comida no se pudo modificar");
+        }
     }//GEN-LAST:event_jbModificarActionPerformed
 
     /**
