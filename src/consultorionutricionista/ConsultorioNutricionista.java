@@ -15,8 +15,8 @@ import AccesoADatos.SeguimientoData;
 public class ConsultorioNutricionista {
 
     public static void main(String[] args) {
-        PacienteData pacienteData = new PacienteData();
-        Paciente paciente = new Paciente("Jorge", 15, "Cosquin", "15",6);
+        //PacienteData pacienteData = new PacienteData();
+        //Paciente paciente = new Paciente("Jorge", 15, "Cosquin", "15",6);
         //pacienteData.guardarPaciente(paciente);
         // pacienteData.modificarPaciente(paciente);
         //pacienteData.eliminarPaciente(3);
@@ -36,23 +36,23 @@ public class ConsultorioNutricionista {
         //      System.out.println(listarComida);
         //  }
         //  System.out.println(comidaData.obtenerComidaPorId(2));
-        Dieta dieta = new Dieta("Ayuno intermitente",   paciente ,LocalDate.of(2012, 3, 12) , 90,78,LocalDate.of(2013,03,12) , 1.70 );
-       DietaData dietaData= new DietaData();
-       // dietaData.guardarDieta(dieta);
+        //Dieta dieta = new Dieta("Ayuno intermitente",   paciente ,LocalDate.of(2012, 3, 12) , 90,78,LocalDate.of(2013,03,12) , 1.70 );
+        //DietaData dietaData= new DietaData();
+        //dietaData.guardarDieta(dieta);
         // for(Dieta ListaDieta:dietaData.obtenerDietas()){
         // System.out.println(ListaDieta);
         // }
         //System.out.println(dietaData.obtenerDietaPorPersona(4));
         //dietaData.borrarDietaPorPaciente(4);
-        Seguimiento seguimiento = new Seguimiento(paciente, LocalDate.of(2012,05,12), 43.1, 42.2, 32.0, 68);
+        //Seguimiento seguimiento = new Seguimiento(paciente, LocalDate.of(2012,05,12), 43.1, 42.2, 32.0, 68);
 
-        SeguimientoData seguimientoData = new SeguimientoData();
+        //SeguimientoData seguimientoData = new SeguimientoData();
         
         
 
         //System.out.println( seguimientoData.CalcularIMCFinal(2));
         
-        seguimientoData.AgregarSeguimiento(seguimiento);
+        //seguimientoData.AgregarSeguimiento(seguimiento);
         //seguimientoData.objetivoCumplido(dieta);
         //System.out.println(seguimientoData.ObtenerSeguimientoPorID(8));
         // seguimientoData.eliminarSeguimiento(8);
@@ -82,7 +82,8 @@ public class ConsultorioNutricionista {
         //dcd.AgregarComidaDieta(6, 4);
         //dcd.AgregarComidaDieta(3, 4);
         
-        dcd.BuscarComidasDieta(4);
+        dcd.AgregarComidaDieta(15,7);
+        dcd.AgregarComidaDieta(17,7);
 
     }
 

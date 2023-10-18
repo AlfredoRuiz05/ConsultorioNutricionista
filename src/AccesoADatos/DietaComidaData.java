@@ -1,11 +1,14 @@
 package AccesoADatos;
 
 import Entidades.Comida;
+import Entidades.Dieta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class DietaComidaData {
@@ -44,6 +47,7 @@ public class DietaComidaData {
             } else {
                 JOptionPane.showMessageDialog(null, "La comida no existe en la dieta seleccionada");
             }
+            ps.close();
         } catch(SQLException ex) {
             System.out.println(ex);
         }
@@ -76,10 +80,12 @@ public class DietaComidaData {
                 } catch(SQLException ex) {
                     System.out.println(ex);
                 }
+                
             }
+            psCheck.close();
         } catch(SQLException ex) {
             System.out.println(ex);
         }
     }
-    
+
 }

@@ -129,7 +129,7 @@ public class GestionDieta extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(275, 275, 275)
+                .addGap(247, 247, 247)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -264,9 +264,7 @@ public class GestionDieta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-
         agregar();
-
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
@@ -274,11 +272,11 @@ public class GestionDieta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jbBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBorrarActionPerformed
-          EliminarDatos();
+        EliminarDatos();
     }//GEN-LAST:event_jbBorrarActionPerformed
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
- cargarDatosDelPacienteSeleccionado();
+        cargarDatosDelPacienteSeleccionado();
     }//GEN-LAST:event_jbBuscarActionPerformed
 
 
@@ -315,10 +313,7 @@ public class GestionDieta extends javax.swing.JInternalFrame {
 
 
  private void cargarCombo() {
-
-       
         PacienteData pacienteData = new PacienteData();
-
         for (Paciente pac : pacienteData.ListarPacientes()) {
             jcPacientes.addItem(pac);
         }
@@ -398,26 +393,19 @@ public class GestionDieta extends javax.swing.JInternalFrame {
         
         String nombre= jtNombreDieta.getText();
 
-       LocalDate fechaInicial= jdFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fechaInicial= jdFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate fechaFinal= jdFechaFinal.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         
         Double pesoInicial= Double.parseDouble( jtPesoInicial.getText());
         Double pesoFinal= Double.parseDouble(jtPesoFinal.getText());
         Double altura= Double.parseDouble(jtAltura.getText());
-       Double pecho= Double.parseDouble(jtMedidaPecho.getText());
-       Double cintura= Double.parseDouble(jtMedidaCintura.getText());
-       Double cadera= Double.parseDouble(jtMedidaCadera.getText());
-        
+        Double pecho= Double.parseDouble(jtMedidaPecho.getText());
+        Double cintura= Double.parseDouble(jtMedidaCintura.getText());
+        Double cadera= Double.parseDouble(jtMedidaCadera.getText());
         DietaData dietaData= new DietaData();
-        
         Dieta dieta = new Dieta(nombre, p,fechaInicial,pesoInicial,pesoFinal,fechaFinal,altura);
-        
-        
         dietaData.guardarDieta(dieta);
-        
-        
         //Inicio el primer seguimiento
-        
         SeguimientoData seguimientoData= new SeguimientoData();
         
         Seguimiento seguimientol= new Seguimiento(p,fechaInicial,pecho,cintura,cadera,pesoInicial);

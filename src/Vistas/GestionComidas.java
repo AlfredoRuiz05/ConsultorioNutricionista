@@ -351,71 +351,16 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void comboComidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboComidasActionPerformed
-          
-        Comida comidas;
-        
-         String nombre;
-        if(comboComidas.getSelectedIndex()>0){
+    private void comboComidas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboComidas1ActionPerformed
+        Comida comida=(Comida) comboComidas1.getSelectedItem();
+        jtEliminar.setText(comida.getNombre()+"");
+    }//GEN-LAST:event_comboComidas1ActionPerformed
 
-          limpiarTabla();
-            
-        comidas= (Comida) comboComidas.getSelectedItem();
-        
-        //Obtengo el id del combobox seleccionado
-       nombre=comidas.getNombre();
-       
-     cargarTabla(nombre+"");
-       
-        }else {
-           
-            limpiarTabla();
-        }
-    }//GEN-LAST:event_comboComidasActionPerformed
+    private void jbEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminar1ActionPerformed
+        ComidaData comidaData= new ComidaData();
+        comidaData.eliminarComida(jtEliminar.getText());
+    }//GEN-LAST:event_jbEliminar1ActionPerformed
 
-    private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
-       jTabbedPane1.setSelectedIndex(1);
-    }//GEN-LAST:event_jbAgregarActionPerformed
-
-    private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
-        Principal principal= new Principal();
-        this.setVisible(false);
-        principal.show(true);
-    }//GEN-LAST:event_jbVolverActionPerformed
-
-    private void verDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verDescripcionActionPerformed
-       int fila=TablaComida.getSelectedRow();
-        String detalle=this.tablaModelo.getValueAt(fila, 1).toString();
-       
-        
-        jtaDetalle.setText(detalle);
-    }//GEN-LAST:event_verDescripcionActionPerformed
-
-    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
-        int cont = 0;
-
-        ComidaData comidaData = new ComidaData();
-        Comida comida;
-        for (int i = 0; i < this.TablaComida.getRowCount(); i++) {
-            String nombre = this.tablaModelo.getValueAt(i, 0).toString();
-            String detalle = this.tablaModelo.getValueAt(i, 1).toString();
-            String tipoComida = this.tablaModelo.getValueAt(i, 2).toString();
-            int calorias = Integer.parseInt(this.tablaModelo.getValueAt(i, 3).toString());
-            int idComida = Integer.parseInt(this.tablaModelo.getValueAt(i, 4).toString()); // Supongamos que la columna 4 contiene el idComida
-            comida = new Comida(nombre, detalle, tipoComida, calorias, idComida);
-
-            if (comidaData.modificarComida(comida)) {
-                cont++;
-            }
-        }
-
-        if (cont >= 1) {
-            JOptionPane.showMessageDialog(null, "La Comida se modificó correctamente");
-        } else {
-            JOptionPane.showMessageDialog(null, "La comida no se pudo modificar");
-        }
-    }//GEN-LAST:event_jbModificarActionPerformed
-    private final Map<String, List<Comida>> comidasPorHorario = new HashMap<>();
     private void jbAgregar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregar5ActionPerformed
         String nombreComida = jtNombre.getText();
         String detalle = jtaDescripcion.getText();
@@ -455,17 +400,70 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
         }
     }//GEN-LAST:event_jbAgregar5ActionPerformed
 
-    private void jbEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminar1ActionPerformed
-        ComidaData comidaData= new ComidaData();
-        comidaData.eliminarComida(jtEliminar.getText());
-    }//GEN-LAST:event_jbEliminar1ActionPerformed
+    private void verDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verDescripcionActionPerformed
+        int fila=TablaComida.getSelectedRow();
+        String detalle=this.tablaModelo.getValueAt(fila, 1).toString();
 
-    private void comboComidas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboComidas1ActionPerformed
-        Comida comida=(Comida) comboComidas1.getSelectedItem();
-        jtEliminar.setText(comida.getNombre()+"");
+        jtaDetalle.setText(detalle);
+    }//GEN-LAST:event_verDescripcionActionPerformed
 
-    }//GEN-LAST:event_comboComidas1ActionPerformed
+    private void comboComidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboComidasActionPerformed
 
+        Comida comidas;
+
+        String nombre;
+        if(comboComidas.getSelectedIndex()>0){
+
+            limpiarTabla();
+
+            comidas= (Comida) comboComidas.getSelectedItem();
+
+            //Obtengo el id del combobox seleccionado
+            nombre=comidas.getNombre();
+
+            cargarTabla(nombre+"");
+
+        }else {
+
+            limpiarTabla();
+        }
+    }//GEN-LAST:event_comboComidasActionPerformed
+
+    private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
+        Principal principal= new Principal();
+        this.setVisible(false);
+        principal.show(true);
+    }//GEN-LAST:event_jbVolverActionPerformed
+
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        int cont = 0;
+
+        ComidaData comidaData = new ComidaData();
+        Comida comida;
+        for (int i = 0; i < this.TablaComida.getRowCount(); i++) {
+            String nombre = this.tablaModelo.getValueAt(i, 0).toString();
+            String detalle = this.tablaModelo.getValueAt(i, 1).toString();
+            String tipoComida = this.tablaModelo.getValueAt(i, 2).toString();
+            int calorias = Integer.parseInt(this.tablaModelo.getValueAt(i, 3).toString());
+            int idComida = Integer.parseInt(this.tablaModelo.getValueAt(i, 4).toString()); // Supongamos que la columna 4 contiene el idComida
+            comida = new Comida(nombre, detalle, tipoComida, calorias, idComida);
+
+            if (comidaData.modificarComida(comida)) {
+                cont++;
+            }
+        }
+
+        if (cont >= 1) {
+            JOptionPane.showMessageDialog(null, "La Comida se modificó correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "La comida no se pudo modificar");
+        }
+    }//GEN-LAST:event_jbModificarActionPerformed
+
+    private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
+        jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_jbAgregarActionPerformed
+    private final Map<String, List<Comida>> comidasPorHorario = new HashMap<>();
     /**
      * @param args the command line arguments
      */
@@ -567,27 +565,16 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
     }
      private void cargarTabla(String nombre1){
         ComidaData comidaData = new ComidaData();
-       
-        
-        
         List <Comida> ListaComidas = new ArrayList<>(comidaData.obtenerComidaPorNombre(nombre1));
-    
-     for (Comida com : ListaComidas) {
-
-      String nombre= com.getNombre();
-      String detalle=com.getDetalle();
-      String tipoComida= com.getTipoComida();
-      int calorias=com.getCantidadCalorias();
-      int idComida=com.getIdComida();
-         
-         tablaModelo.addRow( new Object [] {nombre,detalle,tipoComida,calorias,idComida});
-         
-         
-     }
-       
-         tablaModelo.fireTableDataChanged();
-       
-        
+        for (Comida com : ListaComidas) {
+            String nombre= com.getNombre();
+            String detalle=com.getDetalle();
+            String tipoComida= com.getTipoComida();
+            int calorias=com.getCantidadCalorias();
+            int idComida=com.getIdComida();
+            tablaModelo.addRow( new Object [] {nombre,detalle,tipoComida,calorias,idComida});
+        }
+        tablaModelo.fireTableDataChanged();
      }
      
      private void limpiarTabla() {
