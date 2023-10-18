@@ -76,14 +76,11 @@ public class DietaData {
 
                 dieta.setPaciente( pacienteData.obtenerPacientePorId( paciente  ));
                 
-            
-                
 
-               
                 dietas.add(dieta);
             }
 
-            con.close();
+            ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudieron obtener los datos de la tabla inscripcion");
         }
@@ -228,7 +225,37 @@ public Dieta obtenerUnaDietaPorPersona(int id) {
     
     return dieta; // Devuelve la dieta encontrada o null si no se encuentra ninguna
 }
+        public List<Dieta> ListarDieta() {
 
+        Dieta dieta = null;
+
+        String sql = "SELECT idDieta, nombre FROM dieta";
+
+        ArrayList<Dieta> dietas = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ResultSet resultado = ps.executeQuery();
+
+            while (resultado.next()) {
+
+                
+                Dieta dietanew = new Dieta();
+
+                dietanew.setIdDieta(resultado.getInt("idDieta"));
+                dietanew.setNombre(resultado.getString("nombre"));
+
+                dietas.add(dietanew);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error en la conexion" + ex);
+        }
+
+        return dietas;
+
+    }
     
     
     
