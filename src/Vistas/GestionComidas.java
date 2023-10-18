@@ -96,7 +96,7 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
             }
         });
 
-        jbVolver.setText("Volver al Menu");
+        jbVolver.setText("Salir");
         jbVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbVolverActionPerformed(evt);
@@ -430,9 +430,7 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
     }//GEN-LAST:event_comboComidasActionPerformed
 
     private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
-        Principal principal= new Principal();
-        this.setVisible(false);
-        principal.show(true);
+       dispose();
     }//GEN-LAST:event_jbVolverActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
