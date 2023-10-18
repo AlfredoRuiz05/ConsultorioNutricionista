@@ -33,12 +33,15 @@ public class DietaComidaData {
         }
 
     }
-    public void BorrarComidaDieta(int idDietaComida){
+    public void BorrarComidaDieta(int idDieta,int idComida){
         try{
-            String sql = "DELETE FROM dietacomida WHERE idDietaComida=?";
+            String sql = "DELETE FROM dietacomida WHERE idDieta=? AND idComida=?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idDietaComida);
+            ps.setInt(1, idDieta);
+            
+            ps.setInt(2, idComida);
             int exito = ps.executeUpdate();
+            
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Comida eliminada de la dieta");
             } else {
@@ -81,5 +84,55 @@ public class DietaComidaData {
             System.out.println(ex);
         }
     }
-    
+    public List<Comida> obtenerComidaDietas(int idDieta) {
+        
+        Comida comida = null;
+
+        String sql = "SELECT idComida FROM dietacomida WHERE idDieta=?";
+
+        ArrayList<Comida> comidas = new ArrayList<>();
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ps.setInt(1,idDieta);
+            
+            ResultSet resultado = ps.executeQuery();
+            
+            while (resultado.next()) {
+                
+                String sqlcomidas="SELECT nombre,detalle,tipoComida,cantidadCalorias,idComida from comida WHERE idComida=?";
+                try {
+                    PreparedStatement pscomidas=con.prepareStatement(sqlcomidas);
+                    int selector=resultado.getInt("idComida");
+                    pscomidas.setInt(1, selector);
+                    ResultSet psresult=pscomidas.executeQuery();
+                   
+                    while(psresult.next()){
+                        comida=new Comida();
+                        comida.setNombre(psresult.getString("nombre"));
+                        
+                        comida.setDetalle(psresult.getString("detalle"));
+                        
+                        comida.setTipoComida(psresult.getString("tipoComida"));
+                        
+                        comida.setCantidadCalorias(psresult.getInt("cantidadCalorias"));
+                        
+                        comida.setIdComida(psresult.getInt("idComida"));
+                        
+                        comidas.add(comida);
+                    }
+                } catch(SQLException ex) {
+                    JOptionPane.showMessageDialog(null, " Error en la conexion" + ex);
+                }
+
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error en la conexion" + ex);
+        }
+
+        return comidas;
+
+    }
 }
