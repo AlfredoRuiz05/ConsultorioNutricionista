@@ -6,7 +6,11 @@
 package Vistas;
 
 import AccesoADatos.ComidaData;
+import AccesoADatos.DietaComidaData;
+import AccesoADatos.DietaData;
 import Entidades.Comida;
+import Entidades.Dieta;
+import Entidades.Paciente;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +35,9 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
         armarCabecera();
         cargarCombo();
         cargarComboEliminar();
+        
+        cargarComidaCombo();
+        cargarDietaComboEliminar();
     }
 
     /**
@@ -73,6 +80,15 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
         comboComidas1 = new javax.swing.JComboBox<>();
         jtEliminar = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        DietaCombo = new javax.swing.JComboBox<>();
+        ComidaCombo = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        AgregarComida = new javax.swing.JButton();
+        DietaComboEliminar = new javax.swing.JComboBox<>();
+        ComidaComboEliminar = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -317,7 +333,82 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
                 .addContainerGap(160, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Agregar o Eliminar", jPanel3);
+        jTabbedPane1.addTab("Agregar o Eliminar Comidas", jPanel3);
+
+        jLabel8.setText("Agregar comida a dieta");
+
+        jLabel9.setText("Eliminar comida de dieta");
+
+        AgregarComida.setText("Agregar");
+        AgregarComida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarComidaActionPerformed(evt);
+            }
+        });
+
+        DietaComboEliminar.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                DietaComboEliminarItemStateChanged(evt);
+            }
+        });
+
+        jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(271, 271, 271)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(AgregarComida)
+                        .addGap(194, 194, 194)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(DietaCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ComidaCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(64, 64, 64)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ComidaComboEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DietaComboEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel8)
+                        .addGap(124, 124, 124)
+                        .addComponent(jLabel9)))
+                .addContainerGap(334, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addGap(46, 46, 46)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(DietaCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DietaComboEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ComidaCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComidaComboEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AgregarComida)
+                    .addComponent(jButton1))
+                .addContainerGap(321, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Agregar o Eliminar Comidas a Dieta", jPanel4);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -461,6 +552,32 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
     private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
         jTabbedPane1.setSelectedIndex(1);
     }//GEN-LAST:event_jbAgregarActionPerformed
+
+    private void AgregarComidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarComidaActionPerformed
+        // TODO add your handling code here:
+        Comida comida=(Comida) ComidaCombo.getSelectedItem();
+        Dieta dieta=(Dieta) DietaCombo.getSelectedItem();
+        DietaComidaData dcd=new DietaComidaData();
+        dcd.AgregarComidaDieta(comida.getIdComida(),dieta.getIdDieta());
+    }//GEN-LAST:event_AgregarComidaActionPerformed
+
+    private void DietaComboEliminarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_DietaComboEliminarItemStateChanged
+        // TODO add your handling code here:
+        ComidaComboEliminar.removeAllItems();
+        Dieta dieta=(Dieta) DietaComboEliminar.getSelectedItem();
+        DietaComidaData dcd=new DietaComidaData();
+        for(Comida diet:dcd.ListarComidas(dieta.getIdDieta())){
+            ComidaComboEliminar.addItem(diet);
+        }
+    }//GEN-LAST:event_DietaComboEliminarItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Comida comida=(Comida) ComidaComboEliminar.getSelectedItem();
+        Dieta dieta=(Dieta) DietaComboEliminar.getSelectedItem();
+        DietaComidaData dcd=new DietaComidaData();
+        dcd.BorrarComidaDieta(dieta.getIdDieta(),comida.getIdComida());
+    }//GEN-LAST:event_jButton1ActionPerformed
     private final Map<String, List<Comida>> comidasPorHorario = new HashMap<>();
     /**
      * @param args the command line arguments
@@ -471,28 +588,6 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionComidas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionComidas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionComidas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionComidas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new GestionComidas().setVisible(true);
@@ -501,9 +596,15 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AgregarComida;
+    private javax.swing.JComboBox<Comida> ComidaCombo;
+    private javax.swing.JComboBox<Comida> ComidaComboEliminar;
+    private javax.swing.JComboBox<Dieta> DietaCombo;
+    private javax.swing.JComboBox<Dieta> DietaComboEliminar;
     private javax.swing.JTable TablaComida;
     private javax.swing.JComboBox<Comida> comboComidas;
     private javax.swing.JComboBox<Comida> comboComidas1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -513,9 +614,12 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane6;
@@ -574,7 +678,29 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
         }
         tablaModelo.fireTableDataChanged();
      }
-     
+         private void cargarDietaCombo(){
+        DietaData dietaData  = new DietaData();    
+        DietaCombo.addItem(null);
+        for(Dieta diet:dietaData.obtenerDietas()){
+            DietaCombo.addItem(diet);
+        }
+    }
+    
+    private void cargarComidaCombo(){
+        ComidaData comData  = new ComidaData ();;
+        for(Comida comid:comData.listarComidas()){
+            ComidaCombo.addItem(comid);
+        }
+    }
+    
+    private void cargarDietaComboEliminar(){
+        DietaData dd  = new DietaData();    
+        Paciente paciente = new Paciente();
+        for(Dieta diet:dd.obtenerDietas()){
+            DietaCombo.addItem(diet);
+            DietaComboEliminar.addItem(diet);
+        }
+    }
      private void limpiarTabla() {
          
     DefaultTableModel modelo = (DefaultTableModel) TablaComida.getModel();
