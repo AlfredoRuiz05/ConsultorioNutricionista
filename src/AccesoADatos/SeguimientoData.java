@@ -28,71 +28,118 @@ public class SeguimientoData {
 
     }
 
-    public void AgregarSeguimiento(Seguimiento seguimiento) {
+public void AgregarSeguimiento(Seguimiento seguimiento) {
     try {
-     
         if (seguimiento == null || seguimiento.getPaciente() == null) {
             JOptionPane.showMessageDialog(null, "Datos de seguimiento incorrectos.");
             return;
         }
-        
-        String fdieta= "SELECT fechaFinal, fechaInicial FROM dieta WHERE idPaciente = ?";
-       try( PreparedStatement psfechaF= con.prepareStatement(fdieta)){
-        psfechaF.setInt(1, seguimiento.getPaciente().getIdPaciente());
-        ResultSet rsf= psfechaF.executeQuery();
-        
-        if(rsf.next()){
-            LocalDate fechaFinal= rsf.getDate("fechafinal").toLocalDate();
-            LocalDate fechaInicial= rsf.getDate("fechaInicial").toLocalDate();
-                
-                String sqlVerificarFecha = "SELECT COUNT(*) FROM Seguimiento WHERE idPaciente = ? AND fecha = ?";
-                
-                try (PreparedStatement psVerificarFecha = con.prepareStatement(sqlVerificarFecha)) {
-                    psVerificarFecha.setInt(1, seguimiento.getPaciente().getIdPaciente());
-                    psVerificarFecha.setDate(2, Date.valueOf(seguimiento.getFecha()));
 
-                    ResultSet rs = psVerificarFecha.executeQuery();
-                    if (rs.next()) {
-                        
-                        int registrosExisten = rs.getInt(1);
+        LocalDate fechaSeguimiento = seguimiento.getFecha();
+        int idPaciente = seguimiento.getPaciente().getIdPaciente();
 
-                        if (registrosExisten == 0 && seguimiento.getFecha().compareTo(fechaFinal)<=0 && seguimiento.getFecha().compareTo(fechaInicial)>=0 ) {
-                            String sqlInsertar = "INSERT INTO Seguimiento (idPaciente, fecha, medidaPecho, medidaCintura, medidaCadera, peso) VALUES (?,?,?,?,?,?)";
-                            try (PreparedStatement psInsertar = con.prepareStatement(sqlInsertar)) {
-                                psInsertar.setInt(1, seguimiento.getPaciente().getIdPaciente());
-                                psInsertar.setDate(2, Date.valueOf(seguimiento.getFecha()));
-                                psInsertar.setDouble(3, seguimiento.getMedidaPecho());
-                                psInsertar.setDouble(4, seguimiento.getMedidaCintura());
-                                psInsertar.setDouble(5, seguimiento.getMedidaCadera());
-                                psInsertar.setDouble(6, seguimiento.getPeso());
+        // Verificar que no haya una dieta existente con la misma fecha o en el mismo rango
+        String sqlVerificarDieta = "SELECT COUNT(*) FROM Dieta WHERE idPaciente = ? AND (? BETWEEN fechaInicial AND fechaFinal OR ? BETWEEN fechaInicial AND fechaFinal)";
+        try (PreparedStatement psVerificarDieta = con.prepareStatement(sqlVerificarDieta)) {
+            psVerificarDieta.setInt(1, idPaciente);
+            psVerificarDieta.setDate(2, Date.valueOf(fechaSeguimiento));
+            psVerificarDieta.setDate(3, Date.valueOf(fechaSeguimiento));
 
-                                int filasModificadas = psInsertar.executeUpdate();
-                                if (filasModificadas == 1) {
-                                    JOptionPane.showMessageDialog(null, "El seguimiento ha sido añadido con éxito");
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Error al agregar el seguimiento");
-                                }
-                            }
+            ResultSet rs = psVerificarDieta.executeQuery();
+            if (rs.next()) {
+                int dietasExisten = rs.getInt(1);
+
+                if (dietasExisten > 1) {
+                    JOptionPane.showMessageDialog(null, "No se pueden agregar seguimientos en una fecha que coincide con una dieta existente.");
+                } else {
+                    // No hay dietas existentes para la fecha del seguimiento, podemos proceder
+                    String sqlInsertar = "INSERT INTO Seguimiento (idPaciente, fecha, medidaPecho, medidaCintura, medidaCadera, peso) VALUES (?,?,?,?,?,?)";
+                    try (PreparedStatement psInsertar = con.prepareStatement(sqlInsertar)) {
+                        psInsertar.setInt(1, idPaciente);
+                        psInsertar.setDate(2, Date.valueOf(seguimiento.getFecha()));
+                        psInsertar.setDouble(3, seguimiento.getMedidaPecho());
+                        psInsertar.setDouble(4, seguimiento.getMedidaCintura());
+                        psInsertar.setDouble(5, seguimiento.getMedidaCadera());
+                        psInsertar.setDouble(6, seguimiento.getPeso());
+
+                        int filasModificadas = psInsertar.executeUpdate();
+                        if (filasModificadas == 1) {
+                            JOptionPane.showMessageDialog(null, "El seguimiento ha sido añadido con éxito");
                         } else {
-                            JOptionPane.showMessageDialog(null, "No se pueden repetir fechas, ni la fecha puede ser inferior o superior a las previstas");
-                            }
+                            JOptionPane.showMessageDialog(null, "Error al agregar el seguimiento");
+                        }
                     }
-        }
+                }
             }
-       }
-       
+        }
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Error al establecer la conexión o ejecutar la consulta: " + ex.getMessage());
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Error inesperado: " + ex.getMessage());
     }
-    
 }
-    
 
 
-
-
+//    public void AgregarSeguimiento(Seguimiento seguimiento) {
+//    try {
+//     
+//        if (seguimiento == null || seguimiento.getPaciente() == null) {
+//            JOptionPane.showMessageDialog(null, "Datos de seguimiento incorrectos.");
+//            return;
+//        }
+//        
+//        String fdieta= "SELECT fechaFinal, fechaInicial FROM dieta WHERE idPaciente = ?";
+//       try( PreparedStatement psfechaF= con.prepareStatement(fdieta)){
+//        psfechaF.setInt(1, seguimiento.getPaciente().getIdPaciente());
+//        ResultSet rsf= psfechaF.executeQuery();
+//        
+//        if(rsf.next()){
+//            LocalDate fechaFinal= rsf.getDate("fechafinal").toLocalDate();
+//            LocalDate fechaInicial= rsf.getDate("fechaInicial").toLocalDate();
+//                
+//                String sqlVerificarFecha = "SELECT COUNT(*) FROM Seguimiento WHERE idPaciente = ? AND fecha = ?";
+//                
+//                try (PreparedStatement psVerificarFecha = con.prepareStatement(sqlVerificarFecha)) {
+//                    psVerificarFecha.setInt(1, seguimiento.getPaciente().getIdPaciente());
+//                    psVerificarFecha.setDate(2, Date.valueOf(seguimiento.getFecha()));
+//
+//                    ResultSet rs = psVerificarFecha.executeQuery();
+//                    if (rs.next()) {
+//                        
+//                        int registrosExisten = rs.getInt(1);
+//
+//                        if (registrosExisten == 0 && seguimiento.getFecha().compareTo(fechaFinal)<=0 && seguimiento.getFecha().compareTo(fechaInicial)>=0 ) {
+//                            String sqlInsertar = "INSERT INTO Seguimiento (idPaciente, fecha, medidaPecho, medidaCintura, medidaCadera, peso) VALUES (?,?,?,?,?,?)";
+//                            try (PreparedStatement psInsertar = con.prepareStatement(sqlInsertar)) {
+//                                psInsertar.setInt(1, seguimiento.getPaciente().getIdPaciente());
+//                                psInsertar.setDate(2, Date.valueOf(seguimiento.getFecha()));
+//                                psInsertar.setDouble(3, seguimiento.getMedidaPecho());
+//                                psInsertar.setDouble(4, seguimiento.getMedidaCintura());
+//                                psInsertar.setDouble(5, seguimiento.getMedidaCadera());
+//                                psInsertar.setDouble(6, seguimiento.getPeso());
+//
+//                                int filasModificadas = psInsertar.executeUpdate();
+//                                if (filasModificadas == 1) {
+//                                    JOptionPane.showMessageDialog(null, "El seguimiento ha sido añadido con éxito");
+//                                } else {
+//                                    JOptionPane.showMessageDialog(null, "Error al agregar el seguimiento");
+//                                }
+//                            }
+//                        } else {
+//                            JOptionPane.showMessageDialog(null, "No se pueden repetir fechas, ni la fecha puede ser inferior o superior a las previstas");
+//                            }
+//                    }
+//        }
+//            }
+//       }
+//       
+//    } catch (SQLException ex) {
+//        JOptionPane.showMessageDialog(null, "Error al establecer la conexión o ejecutar la consulta: " + ex.getMessage());
+//    } catch (Exception ex) {
+//        JOptionPane.showMessageDialog(null, "Error inesperado: " + ex.getMessage());
+//    }
+//    
+//}
     public Seguimiento ObtenerSeguimientoPorID(int id) {
 
         Seguimiento seguimiento = null;
@@ -132,12 +179,8 @@ public class SeguimientoData {
 
     }
 
-    
-    
-    
-    
-     public void eliminarSeguimientoPorId(int id) {
-    
+    public void eliminarSeguimientoPorId(int id) {
+
         try {
             String sql = "DELETE FROM seguimiento WHERE idSeguimiento=?";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -152,13 +195,9 @@ public class SeguimientoData {
             JOptionPane.showMessageDialog(null, "Error al Conectar con la tabla Segumiento" + ex.getMessage());
         }
     }
-    
-    
-    
-    
-    
-    public void eliminarSeguimiento(int id,int idSeguimiento) {
-    
+
+    public void eliminarSeguimiento(int id, int idSeguimiento) {
+
         try {
             String sql = "DELETE FROM seguimiento WHERE idPaciente=? And idSeguimiento=?";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -227,105 +266,86 @@ public class SeguimientoData {
         return mayorFecha;
     }
 
-    
-    public double  CalcularIMCFinal(int id){
-        
-        
-   
-       double   IMCFinal=0;
-       
-        
-     String sql= "Select altura , pesoFinal FROM DIETA  WHERE idPaciente = ? ";
-     
+    public double CalcularIMCFinal(int id) {
+
+        double IMCFinal = 0;
+
+        String sql = "Select altura , pesoFinal FROM DIETA  WHERE idPaciente = ? ";
+
         try {
-            PreparedStatement ps= con.prepareStatement(sql);
-            
+            PreparedStatement ps = con.prepareStatement(sql);
+
             ps.setInt(1, id);
-            
-            ResultSet resultado= ps.executeQuery();
-            
+
+            ResultSet resultado = ps.executeQuery();
+
             resultado.next();
-            
-            double  alturaFinal= resultado.getDouble("altura");
-           double pesoFinal = resultado.getDouble("pesoFinal");
-            
-            IMCFinal= pesoFinal / (alturaFinal*alturaFinal);
-            
+
+            double alturaFinal = resultado.getDouble("altura");
+            double pesoFinal = resultado.getDouble("pesoFinal");
+
+            IMCFinal = pesoFinal / (alturaFinal * alturaFinal);
+
         } catch (SQLException ex) {
             Logger.getLogger(SeguimientoData.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
+
         return IMCFinal;
-     
-     
-     
+
     }
-    
-    
-    
-    
-    public double  CalcularIMCInicial(int id){
-        
-        
-        
-       double IMCInicial=0;
-      
-       
-        
-     String sql= "Select altura , pesoInicial FROM DIETA  WHERE idPaciente = ? ";
-     
+
+    public double CalcularIMCInicial(int id) {
+
+        double IMCInicial = 0;
+
+        String sql = "Select altura , pesoInicial FROM DIETA  WHERE idPaciente = ? ";
+
         try {
-            PreparedStatement ps= con.prepareStatement(sql);
-            
+            PreparedStatement ps = con.prepareStatement(sql);
+
             ps.setInt(1, id);
-            
-            ResultSet resultado= ps.executeQuery();
-            
+
+            ResultSet resultado = ps.executeQuery();
+
             resultado.next();
-            
-            double  altura= resultado.getDouble("altura");
-           double peso = resultado.getDouble("pesoInicial");
-            
-            IMCInicial= peso / (altura*altura);
-            
+
+            double altura = resultado.getDouble("altura");
+            double peso = resultado.getDouble("pesoInicial");
+
+            IMCInicial = peso / (altura * altura);
+
         } catch (SQLException ex) {
             Logger.getLogger(SeguimientoData.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
+
         return IMCInicial;
-     
-     
-     
+
     }
-    
-    
-    
-    public List <Paciente> ObjetivoNoCumplido(Dieta dieta){
-        
+
+    public List<Paciente> ObjetivoNoCumplido(Dieta dieta) {
+
         Paciente paciente = new Paciente();
         ArrayList<Paciente> pacientes = new ArrayList<>();
-       if(objetivoCumplido( dieta)==false){
-        
-           pacientes.add(paciente);
-          
-           
+        if (objetivoCumplido(dieta) == false) {
+
+            pacientes.add(paciente);
+
+        }
+        return pacientes;
     }
-       return pacientes; 
-    }
-    
-    public List <Paciente> ObjetivoCumplido(Dieta dieta){
-        
+
+    public List<Paciente> ObjetivoCumplido(Dieta dieta) {
+
         Paciente paciente = new Paciente();
         ArrayList<Paciente> pacientes = new ArrayList<>();
-       if(objetivoCumplido( dieta)==true){
-        
-           pacientes.add(paciente);
-          
-           
+        if (objetivoCumplido(dieta) == true) {
+
+            pacientes.add(paciente);
+
+        }
+        return pacientes;
     }
-       return pacientes; 
-    }
-    
+
     public double obtenerPesoPorFecha(int id) {
         double peso = 0;
 
@@ -347,37 +367,33 @@ public class SeguimientoData {
     }
 
     public boolean objetivoCumplido(Dieta dieta) {
-        
-        boolean VoF=false;
+
+        boolean VoF = false;
         if ((dieta.getFechaFinal().equals(encontrarFechaMasReciente(dieta.getPaciente().getIdPaciente()))) && (dieta.getPesoFinal() == obtenerPesoPorFecha(dieta.getPaciente().getIdPaciente()))) {
 
-          VoF=true;
-        } 
+            VoF = true;
+        }
         return VoF;
     }
-    public void ComidasMenosDeCalo(int calorias){
+
+    public void ComidasMenosDeCalo(int calorias) {
         /* el nombre del metodo es horrible no sabia q ponerle*/
-        String sql="SELECT nombre FROM comida WHERE cantidadCalorias <= ?";
-        try{
-            PreparedStatement ps=con.prepareStatement(sql);
+        String sql = "SELECT nombre FROM comida WHERE cantidadCalorias <= ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, calorias);
             ResultSet listaModificada = ps.executeQuery();
             while (listaModificada.next()) {
                 String sid = listaModificada.getString(1);
                 System.out.println(sid);
             }
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
-    
+
     }
-    
-    
-    
-    
-    
-    
-     public Seguimiento ObtenerSeguimientoPorIDPaciente(int id) {
+
+    public Seguimiento ObtenerSeguimientoPorIDPaciente(int id) {
 
         Seguimiento seguimiento = null;
 
@@ -415,18 +431,13 @@ public class SeguimientoData {
         return seguimiento;
 
     }
-     
-     
-     
-     
+
     public boolean modificarSeguimiento(int idPaciente, Seguimiento seguimiento) {
 
         boolean actual = false;
 
         try {
-           String sql = "UPDATE Seguimiento SET fecha=?, medidaPecho=?, medidaCintura=?, medidaCadera=? WHERE idPaciente=?";
-
-
+            String sql = "UPDATE Seguimiento SET fecha=?, medidaPecho=?, medidaCintura=?, medidaCadera=? WHERE idPaciente=?";
 
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDate(1, Date.valueOf(seguimiento.getFecha()));
@@ -434,7 +445,7 @@ public class SeguimientoData {
             ps.setDouble(3, seguimiento.getMedidaCintura());
             ps.setDouble(4, seguimiento.getMedidaCadera());
             ps.setInt(5, idPaciente);
-            
+
             int exito = ps.executeUpdate();
 
             if (exito == 1) {
@@ -450,7 +461,4 @@ public class SeguimientoData {
         return actual;
     }
 
-
-    
 }
-

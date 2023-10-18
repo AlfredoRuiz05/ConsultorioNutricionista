@@ -20,18 +20,32 @@ public class DietaData {
     public DietaData() {
         con = Conexion.getconexion();
     }
-
     public void guardarDieta(Dieta dieta) {
-        String sql = "INSERT INTO Dieta (nombre, idPaciente,fechaInicial,pesoInicial,pesoFinal,fechaFinal,altura) VALUES (?,?,?,?,?,?,?)";
-        Paciente paciente = new Paciente();
+    String sql = "INSERT INTO Dieta (nombre, idPaciente,fechaInicial,pesoInicial,pesoFinal,fechaFinal,altura) VALUES (?,?,?,?,?,?,?)";
+    Paciente paciente = new Paciente();
 
-        try {
+    try {
+        // Verificar si el paciente ya tiene una dieta en el mismo período
+        String verificaSql = "SELECT COUNT(*) FROM Dieta WHERE idPaciente = ? AND (fechaInicial BETWEEN ? AND ? OR fechaFinal BETWEEN ? AND ?)";
+        PreparedStatement verificaPs = con.prepareStatement(verificaSql);
+        verificaPs.setInt(1, dieta.getPaciente().getIdPaciente());
+        verificaPs.setDate(2, Date.valueOf(dieta.getFechaInicial()));
+        verificaPs.setDate(3, Date.valueOf(dieta.getFechaFinal()));
+        verificaPs.setDate(4, Date.valueOf(dieta.getFechaInicial()));
+        verificaPs.setDate(5, Date.valueOf(dieta.getFechaFinal()));
 
+        ResultSet verificaResult = verificaPs.executeQuery();
+        verificaResult.next();
+        int cantidadDietas = verificaResult.getInt(1);
+
+        if (cantidadDietas > 0) {
+            JOptionPane.showMessageDialog(null, "El paciente ya tiene una dieta en este período de tiempo");
+        } else {
+            // Si no hay dietas en el mismo período, procede con la inserción
             PreparedStatement ps = con.prepareStatement(sql);
-
-            ps.setString(1, dieta.getNombre() );
+            ps.setString(1, dieta.getNombre());
             ps.setInt(2, dieta.getPaciente().getIdPaciente());
-            ps.setDate(3, Date.valueOf( dieta.getFechaInicial()));
+            ps.setDate(3, Date.valueOf(dieta.getFechaInicial()));
             ps.setDouble(4, dieta.getPesoInicial());
             ps.setDouble(5, dieta.getPesoFinal());
             ps.setDate(6, Date.valueOf(dieta.getFechaFinal()));
@@ -39,16 +53,47 @@ public class DietaData {
             int listaModificada = ps.executeUpdate();
 
             if (listaModificada == 1) {
-
-                JOptionPane.showMessageDialog(null, " La Dieta ha sido añadida con exito");
+                JOptionPane.showMessageDialog(null, "La Dieta ha sido añadida con éxito");
             }
 
             ps.close();
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo establecer la conexion");
         }
+
+        verificaPs.close();
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión");
     }
+}
+
+//    public void guardarDieta(Dieta dieta) {
+//        String sql = "INSERT INTO Dieta (nombre, idPaciente,fechaInicial,pesoInicial,pesoFinal,fechaFinal,altura) VALUES (?,?,?,?,?,?,?)";
+//        Paciente paciente = new Paciente();
+//
+//        try {
+//
+//            PreparedStatement ps = con.prepareStatement(sql);
+//
+//            ps.setString(1, dieta.getNombre() );
+//            ps.setInt(2, dieta.getPaciente().getIdPaciente());
+//            ps.setDate(3, Date.valueOf( dieta.getFechaInicial()));
+//            ps.setDouble(4, dieta.getPesoInicial());
+//            ps.setDouble(5, dieta.getPesoFinal());
+//            ps.setDate(6, Date.valueOf(dieta.getFechaFinal()));
+//            ps.setDouble(7, dieta.getAltura());
+//            int listaModificada = ps.executeUpdate();
+//
+//            if (listaModificada == 1) {
+//
+//                JOptionPane.showMessageDialog(null, " La Dieta ha sido añadida con exito");
+//            }
+//
+//            ps.close();
+//
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "No se pudo establecer la conexion");
+//        }
+//    }
 
     public List<Dieta> obtenerDietas() {
         
