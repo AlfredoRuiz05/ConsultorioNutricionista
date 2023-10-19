@@ -1,4 +1,3 @@
-
 package AccesoADatos;
 
 import java.sql.Connection;
@@ -43,32 +42,32 @@ public class PacienteData {
     public void modificarPaciente(Paciente paciente) {
         String sql = "UPDATE paciente SET  nombre=?,dni=?, domicilio=?,telefono=?  WHERE idPaciente=?";
         try {
-           
+
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, paciente.getNombre());
             ps.setInt(2, paciente.getDni());
-            ps.setString(3, paciente.getDomicilio());           
+            ps.setString(3, paciente.getDomicilio());
             ps.setString(4, paciente.getTelefono());
             ps.setInt(5, paciente.getIdPaciente());
             ps.executeUpdate();
             int exito = ps.executeUpdate();
-            if (exito >0) {
+            if (exito > 0) {
                 JOptionPane.showMessageDialog(null, "Paciente Modificado");
             } else {
                 JOptionPane.showMessageDialog(null, "El Paciente no existe");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al Conectar con la tabla paciente" + ex.getMessage());
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "el dni debe ser numerico" + e.getMessage());
         }
     }
 
-    public void eliminarPaciente(int id) {
+    public void eliminarPaciente(int idPaciente) {
         try {
             String sql = "DELETE FROM paciente WHERE idPaciente=?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, idPaciente);
             int exito = ps.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Paciente dado de baja");
@@ -80,7 +79,7 @@ public class PacienteData {
         }
     }
 
-    public Paciente buscarPacientePorID(int id) {
+    public Paciente buscarPacientePorID(int idPaciente) {
 
         Paciente paciente = null;
 
@@ -89,19 +88,19 @@ public class PacienteData {
 
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setInt(1, id);
+            ps.setInt(1, idPaciente);
 
             ResultSet resultado = ps.executeQuery();
 
             if (resultado.next()) {
 
                 paciente = new Paciente();
-                paciente.setIdPaciente(id);
+                paciente.setIdPaciente(idPaciente);
                 paciente.setNombre(resultado.getString("nombre"));
                 paciente.setDni(resultado.getInt("dni"));
                 paciente.setDomicilio(resultado.getString("domicilio"));
                 paciente.setTelefono(resultado.getString("telefono"));
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "No existe ese paciente");
             }
@@ -139,7 +138,6 @@ public class PacienteData {
                 paciente.setDomicilio(resultado.getString("domicilio"));
                 paciente.setTelefono(resultado.getString("telefono"));
 
-              
             }
 
             ps.close();
@@ -188,14 +186,14 @@ public class PacienteData {
         return pacientes;
 
     }
-    public Paciente obtenerPacientePorId(int idPaciente) {
-    
-    for (Paciente paciente : ListarPacientes()) {
-        if (paciente.getIdPaciente()== idPaciente) {
-            return paciente;
-        }
-    }
-    return null; 
-}
-}
 
+    public Paciente obtenerPacientePorId(int idPaciente) {
+
+        for (Paciente paciente : ListarPacientes()) {
+            if (paciente.getIdPaciente() == idPaciente) {
+                return paciente;
+            }
+        }
+        return null;
+    }
+}

@@ -6,7 +6,7 @@
 package Vistas;
 
 
-import Vistas.ConsultaDieta;
+
 import Vistas.GestionComidas;
 import Vistas.GestionPaciente;
 
@@ -45,7 +45,7 @@ public class Principal extends javax.swing.JFrame {
         jbSalir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jbSeguimiento = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jbConsultaDatos = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -92,10 +92,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Consultar datos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbConsultaDatos.setText("Consultar datos");
+        jbConsultaDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbConsultaDatosActionPerformed(evt);
             }
         });
 
@@ -114,7 +114,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jbComidas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbSeguimiento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                     .addComponent(jbDietas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbConsultaDatos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbSalir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -132,7 +132,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbSeguimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbConsultaDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(218, Short.MAX_VALUE))
@@ -218,9 +218,9 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jbSeguimientoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbConsultaDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConsultaDatosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jbConsultaDatosActionPerformed
     /* CAMBIO! */
     /**
      * @param args the command line arguments
@@ -259,12 +259,12 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JButton jbComidas;
+    private javax.swing.JButton jbConsultaDatos;
     private javax.swing.JButton jbDietas;
     private javax.swing.JButton jbPaciente;
     private javax.swing.JButton jbSalir;

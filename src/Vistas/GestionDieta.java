@@ -15,16 +15,13 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import javax.swing.JOptionPane;
 
-
 public class GestionDieta extends javax.swing.JInternalFrame {
 
-   
     public GestionDieta() {
         initComponents();
         cargarCombo();
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -250,7 +247,9 @@ public class GestionDieta extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,33 +311,28 @@ public class GestionDieta extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtPesoInicial;
     // End of variables declaration//GEN-END:variables
 
-
- private void cargarCombo() {
+    private void cargarCombo() {
         PacienteData pacienteData = new PacienteData();
         for (Paciente pac : pacienteData.ListarPacientes()) {
             jcPacientes.addItem(pac);
         }
     }
 
-    
-    
     private void cargarDatosDelPacienteSeleccionado() {
-        
-    Seguimiento seguimientoL = null;
-    Dieta dieta = null;
-    Paciente p= null;
- 
-   if (jcPacientes.getSelectedIndex() >= 0) {
-    p = (Paciente) jcPacientes.getSelectedItem();
-    
-    int id= p.getIdPaciente();
 
-        // Obtengo los datos por parte de la Lista Dieta
+        Seguimiento seguimientoL = null;
+        Dieta dieta = null;
+        Paciente p = null;
+
+        if (jcPacientes.getSelectedIndex() >= 0) {
+            p = (Paciente) jcPacientes.getSelectedItem();
+
+            int id = p.getIdPaciente();
+
+            // Obtengo los datos por parte de la Lista Dieta
             DietaData dietaData = new DietaData();
             dieta = dietaData.obtenerUnaDietaPorPersona(id);
 
-            
-            
             if (dieta != null) {
                 String nombre = dieta.getNombre();
                 LocalDate fechaInicio = dieta.getFechaInicial();
@@ -349,153 +343,142 @@ public class GestionDieta extends javax.swing.JInternalFrame {
                 Double pesoInicial = dieta.getPesoInicial();
                 Double pesoFinal = dieta.getPesoFinal();
                 Double altura = dieta.getAltura();
-                
-                   jtNombreDieta.setText(nombre);
-                  jdFechaInicio.setDate(finicio);
-                    jdFechaFinal.setDate(ffinal);
-                    jtPesoInicial.setText(Double.toString(pesoInicial));
-                    jtPesoFinal.setText(Double.toString(pesoFinal));
-                    jtAltura.setText(Double.toString(altura));
-                
+
+                jtNombreDieta.setText(nombre);
+                jdFechaInicio.setDate(finicio);
+                jdFechaFinal.setDate(ffinal);
+                jtPesoInicial.setText(Double.toString(pesoInicial));
+                jtPesoFinal.setText(Double.toString(pesoFinal));
+                jtAltura.setText(Double.toString(altura));
+
             }
-                // Obtengo los datos por parte de la lista seguimiento
-                SeguimientoData seguimientod = new SeguimientoData();
-                 seguimientoL = seguimientod.ObtenerSeguimientoPorIDPaciente(id);
+            // Obtengo los datos por parte de la lista seguimiento
+            SeguimientoData seguimientod = new SeguimientoData();
+            seguimientoL = seguimientod.ObtenerSeguimientoPorIDPaciente(id);
+
+            System.out.println("Seguimiento" + seguimientoL);
+            // Verifico si se encontraron datos de seguimiento
+            if (seguimientoL != null) {
+                Double pecho = seguimientoL.getMedidaPecho();
+                Double cintura = seguimientoL.getMedidaCintura();
+                Double cadera = seguimientoL.getMedidaCadera();
+
+                jtMedidaPecho.setText(Double.toString(pecho));
+                jtMedidaCintura.setText(Double.toString(cintura));
+                jtMedidaCadera.setText(Double.toString(cadera));
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Todavia no existe un seguimiento, por favor ingrese los datos faltantes");
+
+            }
+        }
+    }
+
+    private void agregar() {
+
+        try {
+
+            Paciente p = (Paciente) jcPacientes.getSelectedItem();
+
+            String nombre = jtNombreDieta.getText();
+
+            LocalDate fechaInicial = jdFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fechaFinal = jdFechaFinal.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            Double pesoInicial = Double.parseDouble(jtPesoInicial.getText());
+            Double pesoFinal = Double.parseDouble(jtPesoFinal.getText());
+            Double altura = Double.parseDouble(jtAltura.getText());
+            Double pecho = Double.parseDouble(jtMedidaPecho.getText());
+            Double cintura = Double.parseDouble(jtMedidaCintura.getText());
+            Double cadera = Double.parseDouble(jtMedidaCadera.getText());
+            DietaData dietaData = new DietaData();
+            int idPaciente = p.getIdPaciente();
+
+            if (dietaData.obtenerUnaDietaPorPersona(idPaciente) != null) {
+                JOptionPane.showMessageDialog(null, "El paciente ya posee una dieta ");
+
+            }else{
                 
-                System.out.println("Seguimiento" + seguimientoL);
-                // Verifico si se encontraron datos de seguimiento
-                if (seguimientoL != null) {
-                    Double pecho = seguimientoL.getMedidaPecho();
-                    Double cintura = seguimientoL.getMedidaCintura();
-                    Double cadera = seguimientoL.getMedidaCadera();
-                    
-                     jtMedidaPecho.setText(Double.toString(pecho));
-                    jtMedidaCintura.setText(Double.toString(cintura));
-                    jtMedidaCadera.setText(Double.toString(cadera));
-                    
-                }else{
-                    JOptionPane.showMessageDialog(null,"Todavia no existe un seguimiento, por favor ingrese los datos faltantes");
-             
-                }   
-    }
-    }
-    
+            Dieta dieta = new Dieta(nombre, p, fechaInicial, pesoInicial, pesoFinal, fechaFinal, altura);
+            dietaData.guardarDieta(dieta);
+            //Inicio el primer seguimiento
+            SeguimientoData seguimientoData = new SeguimientoData();
 
-    
-    
-    
-    private void agregar(){
-        
-        
-     try{   
-         
-      Paciente p = (Paciente) jcPacientes.getSelectedItem();
-        
-        
-        String nombre= jtNombreDieta.getText();
+            Seguimiento seguimientol = new Seguimiento(p, fechaInicial, pecho, cintura, cadera, pesoInicial);
 
-        LocalDate fechaInicial= jdFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate fechaFinal= jdFechaFinal.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        
-        Double pesoInicial= Double.parseDouble( jtPesoInicial.getText());
-        Double pesoFinal= Double.parseDouble(jtPesoFinal.getText());
-        Double altura= Double.parseDouble(jtAltura.getText());
-        Double pecho= Double.parseDouble(jtMedidaPecho.getText());
-        Double cintura= Double.parseDouble(jtMedidaCintura.getText());
-        Double cadera= Double.parseDouble(jtMedidaCadera.getText());
-        DietaData dietaData= new DietaData();
-        Dieta dieta = new Dieta(nombre, p,fechaInicial,pesoInicial,pesoFinal,fechaFinal,altura);
-        dietaData.guardarDieta(dieta);
-        //Inicio el primer seguimiento
-        SeguimientoData seguimientoData= new SeguimientoData();
-        
-        Seguimiento seguimientol= new Seguimiento(p,fechaInicial,pecho,cintura,cadera,pesoInicial);
-        
-        seguimientoData.AgregarSeguimiento(seguimientol);
-        
-    }catch(NullPointerException e){
-    
-    JOptionPane.showMessageDialog(null, "Paciente no encontrado " + e.getMessage());
-    
-    }catch(NumberFormatException e){
-        
-        JOptionPane.showMessageDialog(null, "Debe ingresar datos numericos " + e.getMessage());
+            seguimientoData.AgregarSeguimiento(seguimientol);
+            }
+            
+            
+            
+
+        } catch (NullPointerException e) {
+
+            JOptionPane.showMessageDialog(null, "Paciente no encontrado " + e.getMessage());
+
+        } catch (NumberFormatException e) {
+
+            JOptionPane.showMessageDialog(null, "Debe ingresar datos numericos " + e.getMessage());
+        }
+
     }
-        
+
+    public void ModificarDatos() {
+
+        try {
+            Paciente p = (Paciente) jcPacientes.getSelectedItem();
+
+            int idPaciente = p.getIdPaciente();
+
+            String nombre = jtNombreDieta.getText();
+
+            LocalDate fechaInicial = jdFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fechaFinal = jdFechaFinal.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            Double pesoInicial = Double.parseDouble(jtPesoInicial.getText());
+            Double pesoFinal = Double.parseDouble(jtPesoFinal.getText());
+            Double altura = Double.parseDouble(jtAltura.getText());
+            Double pecho = Double.parseDouble(jtMedidaPecho.getText());
+            Double cintura = Double.parseDouble(jtMedidaCintura.getText());
+            Double cadera = Double.parseDouble(jtMedidaCadera.getText());
+
+            DietaData dietaData = new DietaData();
+
+            Dieta dieta = new Dieta(nombre, p, fechaInicial, pesoInicial, pesoFinal, fechaFinal, altura);
+
+            dietaData.modificarDieta(idPaciente, dieta);
+
+            //Inicio el primer seguimiento
+            SeguimientoData seguimientoData = new SeguimientoData();
+
+            Seguimiento seguimientol = new Seguimiento(p, fechaInicial, pecho, cintura, cadera, pesoInicial);
+
+            seguimientoData.modificarSeguimiento(idPaciente, seguimientol);
+
+        } catch (NumberFormatException | NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, "Error, Revisa los datos ingresados.");
+        }
+
     }
-    
-    
-    
-    public void ModificarDatos(){
-        
-          try{
+
+    private void EliminarDatos() {
+
         Paciente p = (Paciente) jcPacientes.getSelectedItem();
-        
-        int idPaciente= p.getIdPaciente();
-        
-        String nombre= jtNombreDieta.getText();
-        
 
-       LocalDate fechaInicial= jdFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate fechaFinal= jdFechaFinal.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        
-        Double pesoInicial= Double.parseDouble( jtPesoInicial.getText());
-        Double pesoFinal= Double.parseDouble(jtPesoFinal.getText());
-        Double altura= Double.parseDouble(jtAltura.getText());
-       Double pecho= Double.parseDouble(jtMedidaPecho.getText());
-       Double cintura= Double.parseDouble(jtMedidaCintura.getText());
-       Double cadera= Double.parseDouble(jtMedidaCadera.getText());
-        
-        DietaData dietaData= new DietaData();
-        
-        Dieta dieta = new Dieta(nombre, p,fechaInicial,pesoInicial,pesoFinal,fechaFinal,altura);
-        
-        
-        dietaData.modificarDieta(idPaciente, dieta);
-        
-        
-        //Inicio el primer seguimiento
-        
-        SeguimientoData seguimientoData= new SeguimientoData();
-        
-        Seguimiento seguimientol= new Seguimiento(p,fechaInicial,pecho,cintura,cadera,pesoInicial);
-        
-        seguimientoData.modificarSeguimiento(idPaciente, seguimientol);
-        
-         } catch (NumberFormatException | NullPointerException ex) {
-        JOptionPane.showMessageDialog(null, "Error, Revisa los datos ingresados.");
-    }
-        
-    }
-    
-    
-    private void EliminarDatos(){
-        
-        
-        Paciente p = (Paciente)jcPacientes.getSelectedItem();
-        
-        int idPaciente= p.getIdPaciente();
-        
-        DietaData dietaData= new DietaData();
-        
+        int idPaciente = p.getIdPaciente();
+
+        DietaData dietaData = new DietaData();
+
         dietaData.borrarDietaPorPaciente(idPaciente);
-        
-        
-        SeguimientoData seguimientoData= new SeguimientoData();
-        
+
+        SeguimientoData seguimientoData = new SeguimientoData();
+
         Seguimiento seguimiento = new Seguimiento();
-        
-        int IdSeguimiento= seguimiento.getIdSeguimiento();
-        
+
+        int IdSeguimiento = seguimiento.getIdSeguimiento();
+
         seguimientoData.eliminarSeguimiento(idPaciente, IdSeguimiento);
-        
+
     }
-    
+
 }
-    
-
-
-
-
-
-

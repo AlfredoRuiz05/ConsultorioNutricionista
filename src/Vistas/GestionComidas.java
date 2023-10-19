@@ -23,10 +23,13 @@ import javax.swing.table.DefaultTableModel;
  * @author ACER
  */
 public class GestionComidas extends javax.swing.JInternalFrame {
-private DefaultTableModel tablaModelo = new DefaultTableModel();
-    public boolean isCellEditable(int f, int c){
+
+    private DefaultTableModel tablaModelo = new DefaultTableModel();
+
+    public boolean isCellEditable(int f, int c) {
         return false;
     }
+
     /**
      * Creates new form GestionComidas2
      */
@@ -35,7 +38,7 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
         armarCabecera();
         cargarCombo();
         cargarComboEliminar();
-        
+
         cargarComidaCombo();
         cargarDietaComboEliminar();
     }
@@ -64,6 +67,7 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaComida = new javax.swing.JTable();
         verDescripcion = new javax.swing.JButton();
+        jbRefrescar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jtCalorias = new javax.swing.JTextField();
@@ -80,6 +84,7 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
         comboComidas1 = new javax.swing.JComboBox<>();
         jtEliminar = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jbRefrescarEliminarComida = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         DietaCombo = new javax.swing.JComboBox<>();
         ComidaCombo = new javax.swing.JComboBox<>();
@@ -154,6 +159,13 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
             }
         });
 
+        jbRefrescar.setText("Refrescar");
+        jbRefrescar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRefrescarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -171,16 +183,17 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
                                         .addComponent(jbModificar)
                                         .addGap(231, 231, 231)
                                         .addComponent(jbAgregar))
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jLabel2)
-                                            .addGap(43, 43, 43)
-                                            .addComponent(comboComidas, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(verDescripcion)))))
+                                    .addComponent(verDescripcion)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(43, 43, 43)
+                                .addComponent(comboComidas, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(jbRefrescar))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(372, 372, 372)
                         .addComponent(jLabel1)))
@@ -191,23 +204,28 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jLabel1)
-                .addGap(91, 91, 91)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboComidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(verDescripcion)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboComidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbAgregar)
-                    .addComponent(jbModificar)
-                    .addComponent(jbVolver))
-                .addContainerGap(186, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(verDescripcion)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbAgregar)
+                            .addComponent(jbModificar)
+                            .addComponent(jbVolver)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jbRefrescar)))
+                .addContainerGap(190, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Gestion", jPanel2);
@@ -252,6 +270,13 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setText("Eliminar Comida");
 
+        jbRefrescarEliminarComida.setText("Refrescar ");
+        jbRefrescarEliminarComida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRefrescarEliminarComidaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -281,14 +306,16 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
                                 .addComponent(jbTipoComida, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboComidas1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(jbEliminar1)
                                 .addGap(54, 54, 54)))
-                        .addGap(290, 290, 290))
+                        .addGap(33, 33, 33)
+                        .addComponent(jbRefrescarEliminarComida)
+                        .addGap(180, 180, 180))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(108, 108, 108)
                         .addComponent(jLabel3)
@@ -319,8 +346,10 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
                         .addGap(135, 135, 135)
                         .addComponent(jtEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(comboComidas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(73, 73, 73)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboComidas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbRefrescarEliminarComida)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(214, 214, 214)
                         .addComponent(jbEliminar1)))
@@ -443,12 +472,12 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
     }// </editor-fold>//GEN-END:initComponents
 
     private void comboComidas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboComidas1ActionPerformed
-        Comida comida=(Comida) comboComidas1.getSelectedItem();
-        jtEliminar.setText(comida.getNombre()+"");
+        Comida comida = (Comida) comboComidas1.getSelectedItem();
+        jtEliminar.setText(comida.getNombre() + "");
     }//GEN-LAST:event_comboComidas1ActionPerformed
 
     private void jbEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminar1ActionPerformed
-        ComidaData comidaData= new ComidaData();
+        ComidaData comidaData = new ComidaData();
         comidaData.eliminarComida(jtEliminar.getText());
     }//GEN-LAST:event_jbEliminar1ActionPerformed
 
@@ -473,7 +502,7 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
 
                 // Verificar si la comida ya se ha agregado para este horario
                 boolean comidaRepetida = comidasEnHorario.stream()
-                .anyMatch(c -> c.getNombre().equals(nombreComida));
+                        .anyMatch(c -> c.getNombre().equals(nombreComida));
 
                 if (comidaRepetida) {
                     JOptionPane.showMessageDialog(null, "Ya se ha agregado la misma comida para este horario.");
@@ -492,8 +521,8 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
     }//GEN-LAST:event_jbAgregar5ActionPerformed
 
     private void verDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verDescripcionActionPerformed
-        int fila=TablaComida.getSelectedRow();
-        String detalle=this.tablaModelo.getValueAt(fila, 1).toString();
+        int fila = TablaComida.getSelectedRow();
+        String detalle = this.tablaModelo.getValueAt(fila, 1).toString();
 
         jtaDetalle.setText(detalle);
     }//GEN-LAST:event_verDescripcionActionPerformed
@@ -503,25 +532,25 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
         Comida comidas;
 
         String nombre;
-        if(comboComidas.getSelectedIndex()>0){
+        if (comboComidas.getSelectedIndex() > 0) {
 
             limpiarTabla();
 
-            comidas= (Comida) comboComidas.getSelectedItem();
+            comidas = (Comida) comboComidas.getSelectedItem();
 
             //Obtengo el id del combobox seleccionado
-            nombre=comidas.getNombre();
+            nombre = comidas.getNombre();
 
-            cargarTabla(nombre+"");
+            cargarTabla(nombre + "");
 
-        }else {
+        } else {
 
             limpiarTabla();
         }
     }//GEN-LAST:event_comboComidasActionPerformed
 
     private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_jbVolverActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
@@ -555,30 +584,41 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
 
     private void AgregarComidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarComidaActionPerformed
         // TODO add your handling code here:
-        Comida comida=(Comida) ComidaCombo.getSelectedItem();
-        Dieta dieta=(Dieta) DietaCombo.getSelectedItem();
-        DietaComidaData dcd=new DietaComidaData();
-        dcd.AgregarComidaDieta(comida.getIdComida(),dieta.getIdDieta());
+        Comida comida = (Comida) ComidaCombo.getSelectedItem();
+        Dieta dieta = (Dieta) DietaCombo.getSelectedItem();
+        DietaComidaData dcd = new DietaComidaData();
+        dcd.AgregarComidaDieta(comida.getIdComida(), dieta.getIdDieta());
     }//GEN-LAST:event_AgregarComidaActionPerformed
 
     private void DietaComboEliminarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_DietaComboEliminarItemStateChanged
         // TODO add your handling code here:
         ComidaComboEliminar.removeAllItems();
-        Dieta dieta=(Dieta) DietaComboEliminar.getSelectedItem();
-        DietaComidaData dcd=new DietaComidaData();
-        for(Comida diet:dcd.ListarComidas(dieta.getIdDieta())){
+        Dieta dieta = (Dieta) DietaComboEliminar.getSelectedItem();
+        DietaComidaData dcd = new DietaComidaData();
+        for (Comida diet : dcd.ListarComidas(dieta.getIdDieta())) {
             ComidaComboEliminar.addItem(diet);
         }
     }//GEN-LAST:event_DietaComboEliminarItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Comida comida=(Comida) ComidaComboEliminar.getSelectedItem();
-        Dieta dieta=(Dieta) DietaComboEliminar.getSelectedItem();
-        DietaComidaData dcd=new DietaComidaData();
-        dcd.BorrarComidaDieta(dieta.getIdDieta(),comida.getIdComida());
+        Comida comida = (Comida) ComidaComboEliminar.getSelectedItem();
+        Dieta dieta = (Dieta) DietaComboEliminar.getSelectedItem();
+        DietaComidaData dcd = new DietaComidaData();
+        dcd.BorrarComidaDieta(dieta.getIdDieta(), comida.getIdComida());
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jbRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRefrescarActionPerformed
+        comboComidas.removeAllItems();
+        cargarCombo();
+    }//GEN-LAST:event_jbRefrescarActionPerformed
+
+    private void jbRefrescarEliminarComidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRefrescarEliminarComidaActionPerformed
+        comboComidas1.removeAllItems();
+        cargarCombo();
+    }//GEN-LAST:event_jbRefrescarEliminarComidaActionPerformed
     private final Map<String, List<Comida>> comidasPorHorario = new HashMap<>();
+
     /**
      * @param args the command line arguments
      */
@@ -628,6 +668,8 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
     private javax.swing.JButton jbAgregar5;
     private javax.swing.JButton jbEliminar1;
     private javax.swing.JButton jbModificar;
+    private javax.swing.JButton jbRefrescar;
+    private javax.swing.JButton jbRefrescarEliminarComida;
     private javax.swing.JComboBox<String> jbTipoComida;
     private javax.swing.JButton jbVolver;
     private javax.swing.JTextField jtCalorias;
@@ -637,84 +679,77 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
     private javax.swing.JTextArea jtaDetalle;
     private javax.swing.JButton verDescripcion;
     // End of variables declaration//GEN-END:variables
-  private void armarCabecera(){
+    private void armarCabecera() {
         tablaModelo.addColumn("Comida");
         tablaModelo.addColumn("Descripcion");
         tablaModelo.addColumn("Tipo de Comida");
         tablaModelo.addColumn("Calorias");
         tablaModelo.addColumn("idComida");
-        
+
         TablaComida.setModel(tablaModelo);
     }
-    
-    private void cargarCombo(){
-        
-        ComidaData comidaData  = new ComidaData ();
+
+    private void cargarCombo() {
+
+        ComidaData comidaData = new ComidaData();
         comboComidas.addItem(null);
-        for(Comida com:comidaData.listarComidas()){
+        for (Comida com : comidaData.listarComidas()) {
             comboComidas.addItem(com);
         }
     }
-    
-    
-    private void cargarComboEliminar(){
-        
-        ComidaData comidaData  = new ComidaData ();    
+
+    private void cargarComboEliminar() {
+
+        ComidaData comidaData = new ComidaData();
         comboComidas1.addItem(null);
-        for(Comida com:comidaData.listarComidas()){
+        for (Comida com : comidaData.listarComidas()) {
             comboComidas1.addItem(com);
         }
     }
-     private void cargarTabla(String nombre1){
+
+    private void cargarTabla(String nombre1) {
         ComidaData comidaData = new ComidaData();
-        List <Comida> ListaComidas = new ArrayList<>(comidaData.obtenerComidaPorNombre(nombre1));
+        List<Comida> ListaComidas = new ArrayList<>(comidaData.obtenerComidaPorNombre(nombre1));
         for (Comida com : ListaComidas) {
-            String nombre= com.getNombre();
-            String detalle=com.getDetalle();
-            String tipoComida= com.getTipoComida();
-            int calorias=com.getCantidadCalorias();
-            int idComida=com.getIdComida();
-            tablaModelo.addRow( new Object [] {nombre,detalle,tipoComida,calorias,idComida});
+            String nombre = com.getNombre();
+            String detalle = com.getDetalle();
+            String tipoComida = com.getTipoComida();
+            int calorias = com.getCantidadCalorias();
+            int idComida = com.getIdComida();
+            tablaModelo.addRow(new Object[]{nombre, detalle, tipoComida, calorias, idComida});
         }
         tablaModelo.fireTableDataChanged();
-     }
-         private void cargarDietaCombo(){
-        DietaData dietaData  = new DietaData();    
+    }
+
+    private void cargarDietaCombo() {
+        DietaData dietaData = new DietaData();
         DietaCombo.addItem(null);
-        for(Dieta diet:dietaData.obtenerDietas()){
+        for (Dieta diet : dietaData.obtenerDietas()) {
             DietaCombo.addItem(diet);
         }
     }
-    
-    private void cargarComidaCombo(){
-        ComidaData comData  = new ComidaData ();;
-        for(Comida comid:comData.listarComidas()){
+
+    private void cargarComidaCombo() {
+        ComidaData comData = new ComidaData();;
+        for (Comida comid : comData.listarComidas()) {
             ComidaCombo.addItem(comid);
         }
     }
-    
-    private void cargarDietaComboEliminar(){
-        DietaData dd  = new DietaData();    
+
+    private void cargarDietaComboEliminar() {
+        DietaData dd = new DietaData();
         Paciente paciente = new Paciente();
-        for(Dieta diet:dd.obtenerDietas()){
+        for (Dieta diet : dd.obtenerDietas()) {
             DietaCombo.addItem(diet);
             DietaComboEliminar.addItem(diet);
         }
     }
-     private void limpiarTabla() {
-         
-    DefaultTableModel modelo = (DefaultTableModel) TablaComida.getModel();
-    modelo.setRowCount(0); // Limpia todas las filas de la tabla
-    tablaModelo.fireTableDataChanged();
-}
 
+    private void limpiarTabla() {
 
-
-
-
-
-
-
-
+        DefaultTableModel modelo = (DefaultTableModel) TablaComida.getModel();
+        modelo.setRowCount(0); // Limpia todas las filas de la tabla
+        tablaModelo.fireTableDataChanged();
+    }
 
 }
