@@ -219,7 +219,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jbSeguimientoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+ 
+   jPanel3.removeAll();
+        jPanel3.repaint();
+        Consultas bpn = new Consultas();
+        bpn.setVisible(true);
+        jPanel3.add(bpn);         
+        
     }//GEN-LAST:event_jButton1ActionPerformed
     /* CAMBIO! */
     /**

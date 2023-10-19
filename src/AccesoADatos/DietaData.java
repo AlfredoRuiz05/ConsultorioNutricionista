@@ -114,6 +114,7 @@ public class DietaData {
                 dieta.setFechaInicial(resultado.getDate("fechaInicial").toLocalDate());
                 dieta.setPesoInicial(resultado.getDouble("pesoInicial"));
                 dieta.setPesoFinal(resultado.getDouble("pesoFinal"));
+                dieta.setFechaFinal(resultado.getDate("fechaFinal").toLocalDate());
                 dieta.setAltura(resultado.getDouble("altura"));
 
                 int paciente = resultado.getInt("idPaciente");

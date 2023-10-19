@@ -325,13 +325,20 @@ public void AgregarSeguimiento(Seguimiento seguimiento) {
     public List<Paciente> ObjetivoNoCumplido(Dieta dieta) {
 
         Paciente paciente = new Paciente();
-        ArrayList<Paciente> pacientes = new ArrayList<>();
-        if (objetivoCumplido(dieta) == false) {
+        PacienteData pacienteData= new PacienteData();
+        
+        ArrayList<Paciente> ListaPacientes = new ArrayList <>(pacienteData.ListarPacientes()) ;
+        
+        for(Paciente pac: ListaPacientes){
+        
+        if (objetivoCumplido(dieta) == true) {
 
-            pacientes.add(paciente);
+            ListaPacientes.remove(pac);
 
         }
-        return pacientes;
+       
+    }
+         return ListaPacientes;
     }
 
     public List<Paciente> ObjetivoCumplido(Dieta dieta) {
@@ -346,6 +353,9 @@ public void AgregarSeguimiento(Seguimiento seguimiento) {
         return pacientes;
     }
 
+    
+    
+    
     public double obtenerPesoPorFecha(int id) {
         double peso = 0;
 
