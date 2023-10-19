@@ -106,7 +106,7 @@ Paciente paciente = new Paciente();
             }
         });
 
-        jbVolver.setText("Volver al Menu");
+        jbVolver.setText("Salir");
         jbVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbVolverActionPerformed(evt);
@@ -118,7 +118,7 @@ Paciente paciente = new Paciente();
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 228, Short.MAX_VALUE)
+                .addGap(0, 229, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jbAgregar)
@@ -181,7 +181,7 @@ Paciente paciente = new Paciente();
                 .addContainerGap(93, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -280,9 +280,7 @@ Paciente paciente = new Paciente();
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
-        Principal principal= new Principal();
-        this.setVisible(false);
-        principal.show(true);
+      dispose();
     }//GEN-LAST:event_jbVolverActionPerformed
 
     /**

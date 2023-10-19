@@ -15,8 +15,8 @@ import AccesoADatos.SeguimientoData;
 public class ConsultorioNutricionista {
 
     public static void main(String[] args) {
-        PacienteData pacienteData = new PacienteData();
-        Paciente paciente = new Paciente("Jorge", 15, "Cosquin", "15",6);
+        //PacienteData pacienteData = new PacienteData();
+        //Paciente paciente = new Paciente("Jorge", 15, "Cosquin", "15",6);
         //pacienteData.guardarPaciente(paciente);
         // pacienteData.modificarPaciente(paciente);
         //pacienteData.eliminarPaciente(3);
@@ -38,7 +38,7 @@ public class ConsultorioNutricionista {
         //  System.out.println(comidaData.obtenerComidaPorId(2));
         //Dieta dieta = new Dieta("Ayuno intermitente",   paciente ,LocalDate.of(2012, 3, 12) , 90,78,LocalDate.of(2013,03,12) , 1.70 );
         //DietaData dietaData= new DietaData();
-       // dietaData.guardarDieta(dieta);
+        //dietaData.guardarDieta(dieta);
         // for(Dieta ListaDieta:dietaData.obtenerDietas()){
         // System.out.println(ListaDieta);
         // }
@@ -78,11 +78,12 @@ public class ConsultorioNutricionista {
         
         //dieta.guardarDieta(dietd);
         
-        //DietaComidaData dcd=new DietaComidaData();
+        DietaComidaData dcd=new DietaComidaData();
         //dcd.AgregarComidaDieta(6, 4);
         //dcd.AgregarComidaDieta(3, 4);
         
-        //dcd.BuscarComidasDieta(4);
+        dcd.AgregarComidaDieta(15,7);
+        dcd.AgregarComidaDieta(17,7);
 
     }
 
