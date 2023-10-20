@@ -6,6 +6,7 @@
 package Vistas;
 
 
+import AccesoADatos.SeguimientoData;
 import Vistas.ConsultaDieta;
 import Vistas.GestionComidas;
 import Vistas.GestionPaciente;
@@ -25,7 +26,11 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
          this.setLocationRelativeTo(null);
         
+         SeguimientoData seguimientoData= new SeguimientoData();
         
+         
+         
+         seguimientoData.encontrarFechaMasReciente(7);
           
     }
 
@@ -179,6 +184,9 @@ public class Principal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    
     private void jbPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPacienteActionPerformed
         jPanel3.removeAll();
         jPanel3.repaint();

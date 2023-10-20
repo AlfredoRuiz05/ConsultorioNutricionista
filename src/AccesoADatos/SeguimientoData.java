@@ -253,18 +253,26 @@ public void AgregarSeguimiento(Seguimiento seguimiento) {
     }
 
     public LocalDate encontrarFechaMasReciente(int id) {
-        LocalDate mayorFecha = null;
+    String sql = "SELECT fecha FROM SEGUIMIENTO WHERE idPaciente=? ORDER BY fecha DESC";
+    LocalDate fecha = null;
 
-        for (Seguimiento ListaSeguimientos : obtenerSeguimientoPorPersona(id)) {
-            LocalDate fecha = ListaSeguimientos.getFecha();
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet resultado = ps.executeQuery();
 
-            if (mayorFecha == null || fecha.compareTo(mayorFecha) > 0) {
-                mayorFecha = fecha;
-            }
+        if (resultado.next()) {
+            fecha = resultado.getDate("fecha").toLocalDate();
         }
-
-        return mayorFecha;
+    } catch (SQLException e) {
+       
+      
     }
+
+    System.out.println("FECHA " + fecha);
+    return fecha;
+}
+
 
     public double CalcularIMCFinal(int id) {
 
@@ -380,15 +388,19 @@ public void AgregarSeguimiento(Seguimiento seguimiento) {
         return peso;
     }
 
-    public boolean objetivoCumplido(Dieta dieta) {
-
-        boolean VoF = false;
-        if ((dieta.getFechaFinal().equals(encontrarFechaMasReciente(dieta.getPaciente().getIdPaciente()))) && (dieta.getPesoFinal() == obtenerPesoPorFecha(dieta.getPaciente().getIdPaciente()))) {
-
+   public boolean objetivoCumplido(Dieta dieta) {
+    boolean VoF = false;
+    
+    LocalDate fechaMasReciente = encontrarFechaMasReciente(dieta.getPaciente().getIdPaciente());
+    
+    if (fechaMasReciente != null && dieta.getFechaFinal() != null) {
+        if (dieta.getFechaFinal().compareTo(fechaMasReciente) <= 0 && dieta.getPesoFinal() == obtenerPesoPorFecha(dieta.getPaciente().getIdPaciente())) {
             VoF = true;
         }
-        return VoF;
     }
+    
+    return VoF;
+}
 
     public void ComidasMenosDeCalo(int calorias) {
         /* el nombre del metodo es horrible no sabia q ponerle*/

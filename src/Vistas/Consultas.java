@@ -5,6 +5,7 @@ import AccesoADatos.DietaData;
 import AccesoADatos.SeguimientoData;
 import Entidades.Dieta;
 import Entidades.Paciente;
+import Entidades.Seguimiento;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -229,6 +230,7 @@ public class Consultas extends javax.swing.JInternalFrame {
          
           SeguimientoData seguimientoData= new SeguimientoData();
      
+          Seguimiento seguimiento;
           
         List<Dieta> ListaDietas= new ArrayList<>(dietaData.obtenerDietas());
         
@@ -243,11 +245,19 @@ public class Consultas extends javax.swing.JInternalFrame {
            
              for(Paciente Listap: ListaPacientes){
                  
+            
             int idPaciente= Listap.getIdPaciente();
             
                  if(idPaciente== diet.getPaciente().getIdPaciente()){
                      
-                       LocalDate fechaUltima= seguimientoData.encontrarFechaMasReciente(idPaciente);
+                     
+                     seguimiento= seguimientoData.ObtenerSeguimientoPorIDPaciente(idPaciente);
+                     
+                     
+                     int idSeguimiento= seguimiento.getIdSeguimiento();
+                             
+                       LocalDate fechaUltima= seguimientoData.encontrarFechaMasReciente(idSeguimiento);
+                       
                        
                       java.util.Date fechaUltimaDato= java.util.Date.from(fechaUltima.atStartOfDay(ZoneId.systemDefault()).toInstant());
                      
