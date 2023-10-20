@@ -109,19 +109,18 @@ public class Consultas extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(117, 117, 117)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(151, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jRCumplido)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRNoCumplido)
-                        .addGap(191, 191, 191))))
+                .addComponent(jRCumplido)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
+                .addComponent(jRNoCumplido)
+                .addGap(191, 191, 191))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(45, 45, 45))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,11 +217,10 @@ public class Consultas extends javax.swing.JInternalFrame {
     }
  
 
- 
- private void CargarCumplidos (){
      
      
-     if(jRCumplido.isSelected()){
+   private void CargarCumplidos (){
+      if(jRCumplido.isSelected()){
         
      
       DietaData dietaData= new DietaData();
@@ -230,7 +228,8 @@ public class Consultas extends javax.swing.JInternalFrame {
          Dieta dieta = new Dieta() ;
          
           SeguimientoData seguimientoData= new SeguimientoData();
-        
+     
+          
         List<Dieta> ListaDietas= new ArrayList<>(dietaData.obtenerDietas());
         
         
@@ -239,8 +238,19 @@ public class Consultas extends javax.swing.JInternalFrame {
            List <Paciente> ListaPacientes= new ArrayList<>( seguimientoData.ObjetivoCumplido(diet));
               
            
+         
+           
+           
              for(Paciente Listap: ListaPacientes){
+                 
+            int idPaciente= Listap.getIdPaciente();
             
+                 if(idPaciente== diet.getPaciente().getIdPaciente()){
+                     
+                       LocalDate fechaUltima= seguimientoData.encontrarFechaMasReciente(idPaciente);
+                       
+                      java.util.Date fechaUltimaDato= java.util.Date.from(fechaUltima.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                     
             String Nombre= Listap.getNombre();
             
             int DNI= Listap.getDni();
@@ -261,14 +271,18 @@ public class Consultas extends javax.swing.JInternalFrame {
             
             String nombreDieta= diet.getNombre();
             
+                 
+                 System.out.println( Nombre+DNI+ pesoInicial+pesoFinal+nombreDieta+FfinalDato+FinicialDato + fechaUltimaDato);
             
-                 System.out.println( Nombre+DNI+ pesoInicial+pesoFinal+nombreDieta+FfinalDato+FinicialDato);
-            
-            tablaModelo.addRow(new Object [] {Nombre,DNI, pesoInicial,pesoFinal,nombreDieta,FfinalDato,FinicialDato});
+            tablaModelo.addRow(new Object [] {Nombre,DNI, pesoInicial,pesoFinal,nombreDieta,FfinalDato,FinicialDato,fechaUltima});
+                 }
+                 }
  }
         }
-     }
- }
+     } 
+        
+    
+ 
  
  
  
@@ -289,7 +303,8 @@ public class Consultas extends javax.swing.JInternalFrame {
          Dieta dieta = new Dieta() ;
          
           SeguimientoData seguimientoData= new SeguimientoData();
-        
+     
+          
         List<Dieta> ListaDietas= new ArrayList<>(dietaData.obtenerDietas());
         
         
@@ -298,8 +313,12 @@ public class Consultas extends javax.swing.JInternalFrame {
            List <Paciente> ListaPacientes= new ArrayList<>( seguimientoData.ObjetivoNoCumplido(diet));
               
            
+           
+           
              for(Paciente Listap: ListaPacientes){
             
+                 if(Listap.getIdPaciente()== diet.getPaciente().getIdPaciente()){
+                     
             String Nombre= Listap.getNombre();
             
             int DNI= Listap.getDni();
@@ -320,16 +339,14 @@ public class Consultas extends javax.swing.JInternalFrame {
             
             String nombreDieta= diet.getNombre();
             
-            
+                 
                  System.out.println( Nombre+DNI+ pesoInicial+pesoFinal+nombreDieta+FfinalDato+FinicialDato);
             
             tablaModelo.addRow(new Object [] {Nombre,DNI, pesoInicial,pesoFinal,nombreDieta,FfinalDato,FinicialDato});
+                 }
+                 }
  }
         }
      }
  }
  
- 
- 
- 
-}

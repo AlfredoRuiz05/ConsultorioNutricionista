@@ -322,35 +322,37 @@ public void AgregarSeguimiento(Seguimiento seguimiento) {
 
     }
 
-    public List<Paciente> ObjetivoNoCumplido(Dieta dieta) {
+   public List<Paciente> ObjetivoNoCumplido(Dieta dieta) {
+    PacienteData pacienteData = new PacienteData();
+    List<Paciente> ListaPacientes = pacienteData.ListarPacientes();
+    List<Paciente> pacientesNoCumplidos = new ArrayList<>();
 
-        Paciente paciente = new Paciente();
-        PacienteData pacienteData= new PacienteData();
+    for (Paciente pac : ListaPacientes) {
+        if (!objetivoCumplido(dieta)) {
+            pacientesNoCumplidos.add(pac);
+        }
+    }
+
+    return pacientesNoCumplidos;
+}
+
+    public List<Paciente> ObjetivoCumplido(Dieta dieta) {
+
+        PacienteData pacienteData = new PacienteData();
         
-        ArrayList<Paciente> ListaPacientes = new ArrayList <>(pacienteData.ListarPacientes()) ;
+        List<Paciente>ListaPacientes= pacienteData.ListarPacientes();
+        
+        List<Paciente>pacientesCumplidos = new ArrayList<>();
         
         for(Paciente pac: ListaPacientes){
         
         if (objetivoCumplido(dieta) == true) {
 
-            ListaPacientes.remove(pac);
+            pacientesCumplidos.add(pac);
 
         }
-       
-    }
-         return ListaPacientes;
-    }
-
-    public List<Paciente> ObjetivoCumplido(Dieta dieta) {
-
-        Paciente paciente = new Paciente();
-        ArrayList<Paciente> pacientes = new ArrayList<>();
-        if (objetivoCumplido(dieta) == true) {
-
-            pacientes.add(paciente);
-
         }
-        return pacientes;
+        return pacientesCumplidos;
     }
 
     
@@ -360,10 +362,12 @@ public void AgregarSeguimiento(Seguimiento seguimiento) {
         double peso = 0;
 
         LocalDate fecha = encontrarFechaMasReciente(id);
+        
         try {
-            String sql = "SELECT peso FROM seguimiento WHERE fecha=?";
+            String sql = "SELECT peso FROM seguimiento WHERE idPaciente =? AND fecha=?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setDate(1, Date.valueOf(fecha));
+            ps.setInt(1, id);
+            ps.setDate(2, Date.valueOf(fecha));
             ResultSet resultado = ps.executeQuery();
 
             if (resultado.next()) {
