@@ -30,7 +30,7 @@ public class Principal extends javax.swing.JFrame {
         
          
          
-         seguimientoData.encontrarFechaMasReciente(7);
+    
           
     }
 
@@ -214,7 +214,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jbDietasActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
-       System.exit(0);
+    dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbSeguimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSeguimientoActionPerformed

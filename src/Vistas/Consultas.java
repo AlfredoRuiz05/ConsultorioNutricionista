@@ -103,6 +103,11 @@ public class Consultas extends javax.swing.JInternalFrame {
         });
 
         jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -181,6 +186,10 @@ public class Consultas extends javax.swing.JInternalFrame {
       CargarNoCumplidos();
     }//GEN-LAST:event_jRNoCumplidoActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -221,74 +230,56 @@ public class Consultas extends javax.swing.JInternalFrame {
      
      
    private void CargarCumplidos (){
-      if(jRCumplido.isSelected()){
-        
-     
-      DietaData dietaData= new DietaData();
-         
-         Dieta dieta = new Dieta() ;
-         
-          SeguimientoData seguimientoData= new SeguimientoData();
-     
-          Seguimiento seguimiento;
-          
-        List<Dieta> ListaDietas= new ArrayList<>(dietaData.obtenerDietas());
-        
-        
-        for(Dieta diet:ListaDietas){
-            
-           List <Paciente> ListaPacientes= new ArrayList<>( seguimientoData.ObjetivoCumplido(diet));
-              
-           
-         
-           
-           
-             for(Paciente Listap: ListaPacientes){
-                 
-            
-            int idPaciente= Listap.getIdPaciente();
-            
-                 if(idPaciente== diet.getPaciente().getIdPaciente()){
-                     
-                     
-                     seguimiento= seguimientoData.ObtenerSeguimientoPorIDPaciente(idPaciente);
-                     
-                     
-                     int idSeguimiento= seguimiento.getIdSeguimiento();
-                             
-                       LocalDate fechaUltima= seguimientoData.encontrarFechaMasReciente(idSeguimiento);
-                       
-                       
-                      java.util.Date fechaUltimaDato= java.util.Date.from(fechaUltima.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                     
-            String Nombre= Listap.getNombre();
-            
-            int DNI= Listap.getDni();
-            
-            
-            
-            LocalDate fFinal = diet.getFechaFinal();
-            
-           java.util.Date FfinalDato= java.util.Date.from(fFinal.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            
-            LocalDate fInicial= diet.getFechaInicial();
-            
-             java.util.Date FinicialDato= java.util.Date.from(fInicial.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            
-            double pesoInicial= diet.getPesoInicial();
-            
-            double pesoFinal= diet.getPesoFinal();
-            
-            String nombreDieta= diet.getNombre();
-            
-                 
-                 System.out.println( Nombre+DNI+ pesoInicial+pesoFinal+nombreDieta+FfinalDato+FinicialDato + fechaUltimaDato);
-            
-            tablaModelo.addRow(new Object [] {Nombre,DNI, pesoInicial,pesoFinal,nombreDieta,FfinalDato,FinicialDato,fechaUltima});
-                 }
-                 }
- }
+      
+    if (jRCumplido.isSelected()) {
+    DietaData dietaData = new DietaData();
+    Dieta dieta = new Dieta();
+    SeguimientoData seguimientoData = new SeguimientoData();
+    Seguimiento seguimiento;
+
+    List<Dieta> ListaDietas = new ArrayList<>(dietaData.obtenerDietas());
+
+    for (Dieta diet : ListaDietas) {
+        List<Paciente> pacientesCumplidos = new ArrayList<>();
+
+        List<Paciente> ListaPacientes = new ArrayList<>(seguimientoData.ObjetivoCumplido(diet));
+
+        for (Paciente Listap : ListaPacientes) {
+            int idPaciente = Listap.getIdPaciente();
+
+            if (idPaciente == diet.getPaciente().getIdPaciente()) {
+                seguimiento = seguimientoData.ObtenerSeguimientoPorIDPaciente(idPaciente);
+
+                int idSeguimiento = seguimiento.getIdSeguimiento();
+                LocalDate fechaUltima = seguimientoData.encontrarFechaMasReciente(idSeguimiento);
+
+                java.util.Date fechaUltimaDato = java.util.Date.from(fechaUltima.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+                String Nombre = Listap.getNombre();
+                
+                int DNI = Listap.getDni();
+                
+                LocalDate fFinal = diet.getFechaFinal();
+                
+                java.util.Date FfinalDato = java.util.Date.from(fFinal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                
+                LocalDate fInicial = diet.getFechaInicial();
+                
+                java.util.Date FinicialDato = java.util.Date.from(fInicial.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                
+                double pesoInicial = diet.getPesoInicial();
+                
+                double pesoFinal = diet.getPesoFinal();
+                
+                String nombreDieta = diet.getNombre();
+
+
+                tablaModelo.addRow(new Object[]{Nombre, DNI, pesoInicial, pesoFinal, nombreDieta, FfinalDato, FinicialDato, fechaUltima}); 
+            }
         }
+    }
+}
+
      } 
         
     
@@ -302,61 +293,53 @@ public class Consultas extends javax.swing.JInternalFrame {
  
  
  
- private void CargarNoCumplidos (){
-     
-     
-     if(jRNoCumplido.isSelected()){
+private void CargarNoCumplidos() {
+    
+    if (jRNoCumplido.isSelected()) {
         
-     
-      DietaData dietaData= new DietaData();
-         
-         Dieta dieta = new Dieta() ;
-         
-          SeguimientoData seguimientoData= new SeguimientoData();
-     
-          
-        List<Dieta> ListaDietas= new ArrayList<>(dietaData.obtenerDietas());
+        DietaData dietaData = new DietaData();
         
+        SeguimientoData seguimientoData = new SeguimientoData();
         
-        for(Dieta diet:ListaDietas){
-            
-           List <Paciente> ListaPacientes= new ArrayList<>( seguimientoData.ObjetivoNoCumplido(diet));
-              
-           
-           
-           
-             for(Paciente Listap: ListaPacientes){
-            
-                 if(Listap.getIdPaciente()== diet.getPaciente().getIdPaciente()){
-                     
-            String Nombre= Listap.getNombre();
-            
-            int DNI= Listap.getDni();
+
+        List<Dieta> ListaDietas = new ArrayList<>(dietaData.obtenerDietas());
+        
+
+        for (Dieta diet : ListaDietas) {
             
             
-            
-            LocalDate fFinal = diet.getFechaFinal();
-            
-           java.util.Date FfinalDato= java.util.Date.from(fFinal.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            
-            LocalDate fInicial= diet.getFechaInicial();
-            
-             java.util.Date FinicialDato= java.util.Date.from(fInicial.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            
-            double pesoInicial= diet.getPesoInicial();
-            
-            double pesoFinal= diet.getPesoFinal();
-            
-            String nombreDieta= diet.getNombre();
-            
-                 
-                 System.out.println( Nombre+DNI+ pesoInicial+pesoFinal+nombreDieta+FfinalDato+FinicialDato);
-            
-            tablaModelo.addRow(new Object [] {Nombre,DNI, pesoInicial,pesoFinal,nombreDieta,FfinalDato,FinicialDato});
-                 }
-                 }
- }
+            List<Paciente> ListaPacientes = new ArrayList<>(seguimientoData.ObjetivoNoCumplido(diet));
+
+            for (Paciente Listap : ListaPacientes) {
+                
+                if (Listap.getIdPaciente() == diet.getPaciente().getIdPaciente()) {
+                    
+                    String Nombre = Listap.getNombre();
+                    
+                    int DNI = Listap.getDni();
+                    
+                    LocalDate fFinal = diet.getFechaFinal();
+                    
+                    java.util.Date FfinalDato = java.util.Date.from(fFinal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    
+                    LocalDate fInicial = diet.getFechaInicial();
+                    
+                    java.util.Date FinicialDato = java.util.Date.from(fInicial.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    
+                    double pesoInicial = diet.getPesoInicial();
+                    
+                    double pesoFinal = diet.getPesoFinal();
+                    
+                    String nombreDieta = diet.getNombre();
+                    
+                    
+                    tablaModelo.addRow(new Object[]{Nombre, DNI, pesoInicial, pesoFinal, nombreDieta, FfinalDato, FinicialDato});
+                    
+                }
+            }
         }
-     }
- }
+    }
+}
+
+}
  
