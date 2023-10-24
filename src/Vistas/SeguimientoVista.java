@@ -9,6 +9,8 @@ import AccesoADatos.PacienteData;
 import AccesoADatos.SeguimientoData;
 import Entidades.Paciente;
 import Entidades.Seguimiento;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -26,6 +28,82 @@ public class SeguimientoVista extends javax.swing.JInternalFrame {
         initComponents();
         
         cargarCombo();
+        jtPeso.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                char c = ke.getKeyChar();
+                if (!(Character.isDigit(c) || c == '.')) {
+                    ke.consume(); // Evitar la entrada de caracteres no válidos
+                }
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                
+            }
+        });
+        jtCadera.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                char c = ke.getKeyChar();
+                if (!(Character.isDigit(c) || c == '.')) {
+                    ke.consume(); // Evitar la entrada de caracteres no válidos
+                }
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                
+            }
+        });
+        jtCintura.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                char c = ke.getKeyChar();
+                if (!(Character.isDigit(c) || c == '.')) {
+                    ke.consume(); // Evitar la entrada de caracteres no válidos
+                }
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                
+            }
+        });
+        jtPecho.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                char c = ke.getKeyChar();
+                if (!(Character.isDigit(c) || c == '.')) {
+                    ke.consume(); // Evitar la entrada de caracteres no válidos
+                }
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                
+            }
+        });
     }
 
   

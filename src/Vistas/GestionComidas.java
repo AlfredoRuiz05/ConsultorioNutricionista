@@ -11,6 +11,8 @@ import AccesoADatos.DietaData;
 import Entidades.Comida;
 import Entidades.Dieta;
 import Entidades.Paciente;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +40,45 @@ private DefaultTableModel tablaModelo = new DefaultTableModel();
         
         cargarComidaCombo();
         cargarDietaComboEliminar();
+        jtNombre.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isLetter(c)) {
+                    e.consume(); // Evitar la entrada de caracteres no válidos
+                }
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // No es necesario implementar este método, pero se debe proporcionar una implementación
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // No es necesario implementar este método, pero se debe proporcionar una implementación
+            }
+            
+        });
+        jtCalorias.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                char c = ke.getKeyChar();
+                if (!(Character.isDigit(c) || c == '.')) {
+                    ke.consume(); // Evitar la entrada de caracteres no válidos
+                }
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                
+            }
+        });
     }
 
     /**
