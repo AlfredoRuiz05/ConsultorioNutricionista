@@ -1,6 +1,7 @@
 
 package AccesoADatos;
 
+import Entidades.Dieta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -197,5 +198,35 @@ public class PacienteData {
     }
     return null; 
 }
+    public List<Dieta> ListarDietas(int idPaciente,Paciente paciente) {
+        String sql="SELECT idDieta,nombre,idPaciente,fechaInicial,pesoInicial,pesoFinal,fechaFinal,altura FROM dieta WHERE idPaciente=?";
+        Dieta dieta=null;
+        
+        ArrayList<Dieta> dietas=new ArrayList<>();
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setInt(1,idPaciente);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+            dieta=new Dieta();
+            
+            dieta.setIdDieta(rs.getInt("idDieta"));
+            dieta.setNombre(rs.getString("nombre"));
+            dieta.setPaciente(paciente);
+            dieta.setFechaInicial(rs.getDate("fechaInicial").toLocalDate());
+            dieta.setPesoInicial(rs.getInt("pesoInicial"));
+            dieta.setPesoFinal(rs.getInt("pesoFinal"));
+            dieta.setFechaFinal(rs.getDate("fechaFinal").toLocalDate());
+            dieta.setAltura(rs.getInt("altura"));
+            dietas.add(dieta);
+            }
+        } catch(SQLException ex) {
+        System.out.println(ex);
+        }
+        
+        
+        
+        return dietas;
+    }
 }
 

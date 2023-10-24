@@ -7,6 +7,7 @@ package Vistas;
 
 import AccesoADatos.PacienteData;
 import Entidades.Paciente;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -62,20 +63,32 @@ Paciente paciente = new Paciente();
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        setBackground(new java.awt.Color(45, 132, 103));
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Gestion de Pacientes");
-        setPreferredSize(new java.awt.Dimension(1008, 645));
+        setMaximumSize(new java.awt.Dimension(1144, 768));
+        setMinimumSize(new java.awt.Dimension(1144, 768));
+        setPreferredSize(new java.awt.Dimension(1144, 768));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(62, 168, 132));
+        jPanel1.setMaximumSize(new java.awt.Dimension(1125, 746));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1125, 746));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1125, 746));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Gestion de Pacientes");
 
+        jLabel2.setForeground(new java.awt.Color(242, 242, 242));
         jLabel2.setText("Nombre Completo");
 
+        jLabel3.setForeground(new java.awt.Color(242, 242, 242));
         jLabel3.setText("Dni");
 
+        jLabel4.setForeground(new java.awt.Color(242, 242, 242));
         jLabel4.setText("Domicilio");
 
+        jLabel5.setForeground(new java.awt.Color(242, 242, 242));
         jLabel5.setText("Telefono de contacto");
 
         jbAgregar.setText("Agregar");
@@ -117,8 +130,8 @@ Paciente paciente = new Paciente();
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 229, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(292, 292, 292)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jbAgregar)
@@ -127,8 +140,7 @@ Paciente paciente = new Paciente();
                         .addGap(36, 36, 36)
                         .addComponent(jbBaja)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbVolver)
-                        .addContainerGap())
+                        .addComponent(jbVolver))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -136,35 +148,35 @@ Paciente paciente = new Paciente();
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
                         .addGap(38, 38, 38)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jtDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(116, 116, 116))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44)
-                                .addComponent(jbBuscar))
-                            .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbBuscar)))))
+                .addContainerGap(403, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(155, 155, 155)
                 .addComponent(jLabel1)
                 .addGap(44, 44, 44)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(jbBuscar)))
-                .addGap(23, 23, 23)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbBuscar))
+                .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jtDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -178,13 +190,78 @@ Paciente paciente = new Paciente();
                     .addComponent(jbModificar)
                     .addComponent(jbBaja)
                     .addComponent(jbVolver))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(257, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 750));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+
+        try {
+            int dni = Integer.parseInt(jtDni.getText());
+
+            Paciente busquedaPaciente = pacienteData.buscarPacientePorDni(dni);
+
+            jtNombre.setText(busquedaPaciente.getNombre());
+            jtDomicilio.setText(busquedaPaciente.getDomicilio());
+            jtTelefono.setText(busquedaPaciente.getTelefono());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "El dni debe ser numerico");
+        }
+    }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbVolverActionPerformed
+
+    private void jbBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBajaActionPerformed
+        int confirmar = JOptionPane.showConfirmDialog(null, " ¿Seguro desea eliminar al paciente?");
+        if (confirmar == JOptionPane.OK_OPTION) {
+
+            String nombre = jtNombre.getText();
+            try {
+                int dni = Integer.parseInt(jtDni.getText());
+                String domicilio = jtDomicilio.getText();
+                String telefono = jtTelefono.getText();
+                int idPaciente = pacienteData.buscarPacientePorDni(dni).getIdPaciente();
+                paciente = new Paciente(nombre, dni, domicilio, telefono,idPaciente);
+
+                pacienteData.eliminarPaciente(idPaciente);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "El dni debe ser numerico");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se elimino al paciente");
+        }
+    }//GEN-LAST:event_jbBajaActionPerformed
+
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        String nombre = jtNombre.getText();
+        try {
+            int dni = Integer.parseInt(jtDni.getText());
+            String domicilio = jtDomicilio.getText();
+            String telefono = jtTelefono.getText();
+            int idPaciente = pacienteData.buscarPacientePorDni(dni).getIdPaciente();
+            if (nombre.isEmpty() || domicilio.isEmpty() || telefono.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos");
+            } else {
+                if (isNumeric(telefono) == true) {
+
+                    paciente = new Paciente(nombre, dni, domicilio, telefono, idPaciente);
+                    pacienteData.modificarPaciente(paciente);
+                } else {
+                    JOptionPane.showMessageDialog(null, "El telefono debe ser numerico sin guiones o signos");
+                }
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "El dni debe ser numerico");
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos");
+        }
+    }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
         int dni;
@@ -217,71 +294,6 @@ Paciente paciente = new Paciente();
             JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos " + e.getMessage());
         }
     }//GEN-LAST:event_jbAgregarActionPerformed
-
-    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
-        String nombre = jtNombre.getText();
-        try {
-            int dni = Integer.parseInt(jtDni.getText());
-            String domicilio = jtDomicilio.getText();
-            String telefono = jtTelefono.getText();
-            int idPaciente = pacienteData.buscarPacientePorDni(dni).getIdPaciente();
-            if (nombre.isEmpty() || domicilio.isEmpty() || telefono.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos");
-            } else {
-                if (isNumeric(telefono) == true) {
-
-                    paciente = new Paciente(nombre, dni, domicilio, telefono, idPaciente);
-                    pacienteData.modificarPaciente(paciente);
-                } else {
-                    JOptionPane.showMessageDialog(null, "El telefono debe ser numerico sin guiones o signos");
-                }
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "El dni debe ser numerico");
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos");
-        }
-    }//GEN-LAST:event_jbModificarActionPerformed
-
-    private void jbBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBajaActionPerformed
-        int confirmar = JOptionPane.showConfirmDialog(null, " ¿Seguro desea eliminar al paciente?");
-        if (confirmar == JOptionPane.OK_OPTION) {
-
-            String nombre = jtNombre.getText();
-            try {
-                int dni = Integer.parseInt(jtDni.getText());
-                String domicilio = jtDomicilio.getText();
-                String telefono = jtTelefono.getText();
-                int idPaciente = pacienteData.buscarPacientePorDni(dni).getIdPaciente();
-                paciente = new Paciente(nombre, dni, domicilio, telefono,idPaciente);
-
-                pacienteData.eliminarPaciente(idPaciente);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "El dni debe ser numerico");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se elimino al paciente");
-        }
-    }//GEN-LAST:event_jbBajaActionPerformed
-
-    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
-
-        try {
-            int dni = Integer.parseInt(jtDni.getText());
-
-            Paciente busquedaPaciente = pacienteData.buscarPacientePorDni(dni);
-
-            jtNombre.setText(busquedaPaciente.getNombre());
-            jtDomicilio.setText(busquedaPaciente.getDomicilio());
-            jtTelefono.setText(busquedaPaciente.getTelefono());
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "El dni debe ser numerico");
-        }
-    }//GEN-LAST:event_jbBuscarActionPerformed
-
-    private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
-      dispose();
-    }//GEN-LAST:event_jbVolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -338,18 +350,21 @@ Paciente paciente = new Paciente();
     private javax.swing.JTextField jtTelefono;
     // End of variables declaration//GEN-END:variables
 public boolean isNumeric(String cadena) {
+    boolean resultado;
 
-        boolean resultado;
+    try {
+       
+        Integer.parseInt(cadena);
 
-        try {
-            Integer.parseInt(cadena);
-            resultado = true;
-        } catch (NumberFormatException excepcion) {
-            resultado = false;
-        }
-
-        return resultado;
+      
+        resultado = true;
+    } catch (NumberFormatException excepcion) {
+        
+        resultado = cadena.matches("[0-9]*");
     }
+
+    return resultado;
+}
 
 
 }
